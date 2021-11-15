@@ -50,17 +50,18 @@
 
         <ImageView
             android:id="@+id/imageView_snippet_output"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="200dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@id/textView_snippet_description"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/sample" />
+            app:layout_constraintStart_toStartOf="parent"/>
 
         <ImageView
             android:id="@+id/imageView_like"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             app:layout_constraintEnd_toStartOf="@+id/imageView_bookmark"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -72,6 +73,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/imageView_like"
             app:layout_constraintTop_toBottomOf="@id/imageView_snippet_output"
