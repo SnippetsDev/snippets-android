@@ -1,4 +1,4 @@
-package dev.snippets.ui
+package dev.snippets.ui.launch
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import dev.snippets.R
+import dev.snippets.ui.MainActivity
 
 class LaunchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
