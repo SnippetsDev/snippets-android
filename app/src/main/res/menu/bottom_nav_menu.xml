@@ -6,4 +6,9 @@
         android:id="@+id/homeFragment"
         android:icon="@drawable/outline_home_24" />
 
+    <item
+        android:title="User"
+        android:id="@+id/userFragment"
+        android:icon="@drawable/outline_account_circle_24" />
+
 </menu>

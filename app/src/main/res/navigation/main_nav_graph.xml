@@ -10,4 +10,9 @@
         android:name="dev.snippets.ui.home.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/userFragment"
+        android:name="dev.snippets.ui.user.UserFragment"
+        android:label="fragment_user"
+        tools:layout="@layout/fragment_user" />
 </navigation>
