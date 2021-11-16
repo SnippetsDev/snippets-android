@@ -3,8 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:contentPadding="8dp"
-    android:layout_margin="4dp"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="16dp"
     style="?attr/materialCardViewFilledStyle"
+    app:cardBackgroundColor="#242424"
+    android:elevation="1dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
