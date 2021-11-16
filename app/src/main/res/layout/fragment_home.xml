@@ -28,10 +28,10 @@
             android:id="@+id/imageView5"
             android:layout_width="96dp"
             android:layout_height="96dp"
-            android:src="@drawable/snippets_logo_transparent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/snippets_logo_clean_transparent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
