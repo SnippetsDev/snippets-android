@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import coil.load
 import coil.transform.CircleCropTransformation
+import dev.snippets.BuildConfig
 import dev.snippets.R
 import dev.snippets.databinding.FragmentUserBinding
 
@@ -27,8 +28,11 @@ class UserFragment : Fragment() {
 
         with(binding) {
             imageViewUserImage.load(R.drawable.sample_user_image) {
+                crossfade(true)
                 transformations(CircleCropTransformation())
             }
+
+            textViewVersionName.text = "Version ${BuildConfig.VERSION_NAME}"
         }
     }
 }
