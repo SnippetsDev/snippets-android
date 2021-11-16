@@ -29,13 +29,6 @@ class UserFragment : Fragment() {
             imageViewUserImage.load(R.drawable.sample_user_image) {
                 transformations(CircleCropTransformation())
             }
-
-            textViewUserName.text = "Guido van Rossum"
-            textViewUserEmail.text = "guido@python.org"
-            textViewUserBio.text = "Creator of the Python programming language. " +
-                    "Holds a Master's degree in Computer Science and Mathematic. " +
-                    "Previously Senior Staff Engineer @ Google, Principal Engineer @ Dropbox. " +
-                    "Currently Distinguished Engineer @ Microsoft."
         }
     }
 }
