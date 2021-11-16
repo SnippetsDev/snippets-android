@@ -2,4 +2,10 @@
     <string name="app_name">Snippets</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="sample_user_name">Guido van Rossum</string>
+    <string name="sample_user_email">guido@python.org</string>
+    <string name="sample_user_bio">Creator of the Python programming language.
+        Holds a Master\'s degree in Computer Science and Mathematics.
+        Previously Senior Staff Engineer @ Google, Principal Engineer @ Dropbox.
+        Currently Distinguished Engineer @ Microsoft.</string>
 </resources>

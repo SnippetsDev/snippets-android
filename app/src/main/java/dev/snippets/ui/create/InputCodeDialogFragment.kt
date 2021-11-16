@@ -31,5 +31,9 @@ class InputCodeDialogFragment : BottomSheetDialogFragment() {
         binding.buttonDone.setOnClickListener {
             dismiss()
         }
+
+        binding.buttonCancel.setOnClickListener {
+            dismiss()
+        }
     }
 }
