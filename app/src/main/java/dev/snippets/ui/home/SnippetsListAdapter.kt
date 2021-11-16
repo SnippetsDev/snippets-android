@@ -27,24 +27,12 @@ class SnippetsListAdapter(context: Context, private val dataset: List<String>) :
         var bookmarked = false
 
         init {
-            binding.imageViewLike.setOnClickListener {
-                if (liked) {
-                    liked = false
-                    binding.imageViewLike.setImageResource(R.drawable.outline_favorite_border_24)
-                } else {
-                    liked = true
-                    binding.imageViewLike.setImageResource(R.drawable.outline_favorite_24)
-                }
+            binding.buttonLike.setOnClickListener {
+                liked = !liked
             }
 
-            binding.imageViewBookmark.setOnClickListener {
-                if (bookmarked) {
-                    bookmarked = false
-                    binding.imageViewBookmark.setImageResource(R.drawable.outline_collections_bookmark_24)
-                } else {
-                    bookmarked = true
-                    binding.imageViewBookmark.setImageResource(R.drawable.baseline_collections_bookmark_24)
-                }
+            binding.buttonBookmark.setOnClickListener {
+                bookmarked = !bookmarked
             }
         }
     }

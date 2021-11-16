@@ -3,8 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:contentPadding="8dp"
-    android:layout_margin="4dp"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="16dp"
     style="?attr/materialCardViewFilledStyle"
+    app:cardBackgroundColor="#242424"
+    android:elevation="1dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -57,28 +60,33 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
-        <ImageView
-            android:id="@+id/imageView_like"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <com.sackcentury.shinebuttonlib.ShineButton
+            android:id="@+id/button_like"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toStartOf="@+id/imageView_bookmark"
+            app:layout_constraintEnd_toStartOf="@+id/button_bookmark"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imageView_snippet_output"
-            app:srcCompat="@drawable/outline_favorite_border_24" />
+            android:layout_centerInParent="true"
+            app:btn_color="@color/white"
+            app:btn_fill_color="#FF0000"
+            app:siShape="@drawable/outline_favorite_24"/>
 
-        <ImageView
-            android:id="@+id/imageView_bookmark"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <com.sackcentury.shinebuttonlib.ShineButton
+            android:id="@+id/button_bookmark"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="8dp"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/imageView_like"
+            app:layout_constraintStart_toEndOf="@+id/button_like"
             app:layout_constraintTop_toBottomOf="@id/imageView_snippet_output"
-            app:srcCompat="@drawable/outline_collections_bookmark_24" />
-
+            android:layout_centerInParent="true"
+            app:btn_color="@color/white"
+            app:btn_fill_color="#2979FF"
+            app:siShape="@drawable/baseline_collections_bookmark_24"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
