@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Custom App Colors -->
+    <color name="snippet_card_background">#242424</color>
+    <color name="snippet_button_like">#FFFFFF</color>
+    <color name="snippet_button_bookmark">#FFFFFF</color>
+    <color name="snippet_button_like_clicked">#FF0000</color>
+    <color name="snippet_button_bookmark_clicked">#26CCFF</color>
+</resources>

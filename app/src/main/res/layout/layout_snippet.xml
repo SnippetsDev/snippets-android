@@ -6,7 +6,7 @@
     android:layout_margin="8dp"
     app:cardCornerRadius="16dp"
     style="?attr/materialCardViewFilledStyle"
-    app:cardBackgroundColor="#242424"
+    app:cardBackgroundColor="@color/snippet_card_background"
     android:elevation="1dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -70,8 +70,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imageView_snippet_output"
             android:layout_centerInParent="true"
-            app:btn_color="@color/white"
-            app:btn_fill_color="#FF0000"
+            app:btn_color="@color/snippet_button_like"
+            app:btn_fill_color="@color/snippet_button_like_clicked"
             app:siShape="@drawable/outline_favorite_24"/>
 
         <com.sackcentury.shinebuttonlib.ShineButton
@@ -84,8 +84,8 @@
             app:layout_constraintStart_toEndOf="@+id/button_like"
             app:layout_constraintTop_toBottomOf="@id/imageView_snippet_output"
             android:layout_centerInParent="true"
-            app:btn_color="@color/white"
-            app:btn_fill_color="#2979FF"
+            app:btn_color="@color/snippet_button_bookmark"
+            app:btn_fill_color="@color/snippet_button_bookmark_clicked"
             app:siShape="@drawable/baseline_collections_bookmark_24"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
