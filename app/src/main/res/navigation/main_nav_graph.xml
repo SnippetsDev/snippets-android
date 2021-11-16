@@ -13,6 +13,11 @@
     <fragment
         android:id="@+id/userFragment"
         android:name="dev.snippets.ui.user.UserFragment"
-        android:label="fragment_user"
+        android:label="User"
         tools:layout="@layout/fragment_user" />
+    <fragment
+        android:id="@+id/createFragment"
+        android:name="dev.snippets.ui.create.CreateFragment"
+        android:label="Create"
+        tools:layout="@layout/fragment_create" />
 </navigation>
