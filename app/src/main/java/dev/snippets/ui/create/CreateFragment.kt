@@ -22,6 +22,10 @@ class CreateFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
+        with (binding) {
+            buttonInputCode.setOnClickListener {
+                InputCodeDialogFragment().show(parentFragmentManager, "INPUT_MODAL")
+            }
+        }
     }
 }
