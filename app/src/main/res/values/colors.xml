@@ -7,4 +7,11 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Custom App Colors -->
+    <color name="snippet_card_background">#B2DFDB</color>
+    <color name="snippet_button_like">#000000</color>
+    <color name="snippet_button_bookmark">#000000</color>
+    <color name="snippet_button_like_clicked">#FF0000</color>
+    <color name="snippet_button_bookmark_clicked">#007BFF</color>
 </resources>
