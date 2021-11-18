@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.DrawableRes
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.RoundedCornersTransformation
@@ -23,8 +24,8 @@ class SnippetsListAdapter(context: Context, private val dataset: List<String>) :
     }
 
     class ViewHolder(val binding: LayoutSnippetBinding) : RecyclerView.ViewHolder(binding.root) {
-        var liked = false
-        var bookmarked = false
+        private var liked = false
+        private var bookmarked = false
 
         init {
             binding.buttonLike.setOnClickListener {
@@ -48,6 +49,9 @@ class SnippetsListAdapter(context: Context, private val dataset: List<String>) :
             transformations(RoundedCornersTransformation(20f))
         }
 
+        holder.binding.root.setOnClickListener {
+            holder.binding.root.findNavController().navigate(R.id.action_homeFragment_to_detailFragment)
+        }
         // Chip inflation omitted for now
     }
 
