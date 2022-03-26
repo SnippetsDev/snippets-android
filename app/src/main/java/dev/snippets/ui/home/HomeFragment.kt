@@ -5,11 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import dev.snippets.databinding.FragmentHomeBinding
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
+    private val model by viewModels<HomeViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,5 +35,6 @@ class HomeFragment : Fragment() {
                 "Basic RecyclerView with Single Line Text"
             ))
         }
+        model.getAllSnippets()
     }
 }

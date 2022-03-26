@@ -19,7 +19,11 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "BASE_URL", "\"http://localhost:8000\"")
+        }
         release {
+            buildConfigField("String", "BASE_URL", "\"https://https://snippetsworld.el.r.appspot.com/\"")
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -53,4 +57,12 @@ dependencies {
 
     implementation "com.google.dagger:hilt-android:2.38.1"
     kapt "com.google.dagger:hilt-compiler:2.38.1"
+
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
+    implementation("com.squareup.moshi:moshi-kotlin:1.13.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
+
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
 }
