@@ -1,10 +1,15 @@
 package dev.snippets.util
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.graphics.Color
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import androidx.core.content.ContextCompat
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.snippets.BuildConfig
@@ -57,3 +62,16 @@ fun getUniqueNameForImage() = "${getUuid()} ${getFormattedDateTime()}"
 fun View.disable() = run { this.isEnabled = false }
 
 fun View.enable() = run { this.isEnabled = true }
+
+fun inflateChips(inflater: LayoutInflater, chipGroup: ChipGroup, items: List<String>) {
+    for (item in items) {
+        val chip = inflater.inflate(R.layout.layout_chip_tag, chipGroup, false) as Chip
+        chip.text = item
+        chipGroup.addView(chip)
+    }
+}
+
+fun Context.copyToClipboard(clipLabel: String, text: CharSequence){
+    val clipboard = ContextCompat.getSystemService(this, ClipboardManager::class.java)
+    clipboard?.setPrimaryClip(ClipData.newPlainText(clipLabel, text))
+}

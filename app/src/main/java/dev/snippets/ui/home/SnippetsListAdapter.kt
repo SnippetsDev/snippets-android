@@ -29,6 +29,10 @@ class SnippetsListAdapter(private val context: Context, private val snippets: Li
                     chip.text = tag
                     chipGroupSnippetTags.addView(chip)
                 }
+                root.setOnClickListener {
+                    val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(snippet.id)
+                    it.findNavController().navigate(action)
+                }
             }
         }
     }
