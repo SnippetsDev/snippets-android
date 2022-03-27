@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "121286948406",
+    "project_id": "snipppets-is-awesome",
+    "storage_bucket": "snipppets-is-awesome.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:121286948406:android:b2e85d0ced7d47a6d38a97",
+        "android_client_info": {
+          "package_name": "dev.snippets"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "121286948406-olio219k0litsspskhqrar5dj3a796ba.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOsGnNDboBJ1QphltONNshNN1vU9bvUOM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "121286948406-olio219k0litsspskhqrar5dj3a796ba.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
