@@ -6,10 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.create.form.AddSnippetCodeFragment">
 
-    <nl.dionsegijn.konfetti.xml.KonfettiView
-        android:id="@+id/konfetti"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
     <TextView
         android:id="@+id/textView"
@@ -80,4 +76,8 @@
         android:visibility="gone"
         tools:visibility="visible"/>
 
+    <nl.dionsegijn.konfetti.xml.KonfettiView
+        android:id="@+id/konfetti"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

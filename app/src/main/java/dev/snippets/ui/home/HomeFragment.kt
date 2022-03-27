@@ -8,12 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import dev.snippets.R
 import dev.snippets.data.Snippet
 import dev.snippets.databinding.FragmentHomeBinding
-import dev.snippets.util.State
-import dev.snippets.util.errorSnackbar
-import dev.snippets.util.hideWithAnimation
-import dev.snippets.util.showWithAnimation
+import dev.snippets.util.*
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -34,18 +32,47 @@ class HomeFragment : Fragment() {
 
         binding.listSnippets.setLayoutManager(LinearLayoutManager(context))
 
+        binding.layoutSwipeRefresh.setOnRefreshListener {
+            renderSnippets()
+        }
+        renderSnippets()
+    }
 
+    /**
+     * Had to separate this out because if the livedata emitted from the viewmodel
+     * is not observed, it'll not work at all. This was causing problems with the swipe to refresh
+     * feature, so this fixes it.
+     */
+    private fun renderSnippets() {
         model.getAllSnippets().observe(viewLifecycleOwner) {
             when (it) {
-                is State.Loading -> binding.listSnippets.apply {
-                    addVeiledItems(15)
-                    veil()
+                is State.Loading -> {
+                    binding.lottie.hide()
+                    binding.listSnippets.showWithAnimation()
+                    binding.listSnippets.apply {
+                        addVeiledItems(15)
+                        veil()
+                    }
                 }
-                is State.Error -> binding.root.errorSnackbar(it.message)
+                is State.Error -> {
+                    binding.root.errorSnackbar(it.message)
+                    binding.lottie.setAnimation(R.raw.error)
+                    binding.listSnippets.hideWithAnimation()
+                    binding.lottie.showWithAnimation()
+                }
                 is State.Success -> {
-                    binding.listSnippets.unVeil()
-                    binding.listSnippets.getRecyclerView().apply {
-                        adapter = SnippetsListAdapter(requireContext(), it.data.snippets)
+                    if (it.data.snippets.isEmpty()) {
+                        binding.listSnippets.hideWithAnimation()
+                        binding.lottie.showWithAnimation()
+                        binding.lottie.setAnimation(R.raw.empty)
+                    } else {
+                        binding.lottie.hide()
+                        binding.listSnippets.unVeil()
+                        binding.listSnippets.getRecyclerView().apply {
+                            adapter = SnippetsListAdapter(requireContext(), it.data.snippets)
+                        }
+                        binding.layoutSwipeRefresh.isRefreshing = false
+                        binding.listSnippets.showWithAnimation()
                     }
                 }
             }
