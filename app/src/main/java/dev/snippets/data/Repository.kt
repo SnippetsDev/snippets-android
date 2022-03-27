@@ -22,6 +22,8 @@ class Repository (
 
     suspend fun getAllTags() = dataOrError { api.getAllTags() }
 
+    suspend fun getSnippet(id: String) = dataOrError { api.getSnippet(id) }
+
     fun uploadImageToFirebase(imageUri: Uri) = liveData {
         emit(State.Loading)
         val ref = Firebase.storage.reference.child("snippet_outputs/${getUniqueNameForImage()}")
@@ -51,7 +53,8 @@ class Repository (
 
     /**
      * This is a really common pattern where the API call result needs to be checked for errors.
-     * This method simplifies the error handling and returns the data if successful, error message otherwise
+     * This method simplifies the error handling and returns the data if successful, error message otherwise.
+     * Note that this method returns the data or error wrapped in a State object. It does not emit a loading state.
      */
     private suspend fun <T> dataOrError(apiCall: suspend () -> Response<T>): State<T> = withContext(Dispatchers.IO) {
         try {

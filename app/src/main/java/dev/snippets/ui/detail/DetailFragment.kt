@@ -5,16 +5,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import coil.load
 import coil.transform.RoundedCornersTransformation
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import dev.snippets.R
+import dev.snippets.data.Snippet
 import dev.snippets.databinding.FragmentDetailBinding
+import dev.snippets.util.*
 import io.github.kbiakov.codeview.adapters.Options
 import io.github.kbiakov.codeview.highlight.ColorTheme
 
+@AndroidEntryPoint
 class DetailFragment : Fragment() {
     private lateinit var binding: FragmentDetailBinding
+    private val model by viewModels<DetailViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,30 +36,37 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // MockSnippet("Double Back Button Press Exit", listOf("Android", "Kotlin"), "Exit Android app on two taps of the back button along with a toast", R.drawable.sample_2),
-
-        with (binding) {
-            textViewSnippetTitle.text = "Double Back Button Press Exit"
-            textViewSnippetDescription.text = "Exit Android app on two taps of the back button along with a toast"
-            with (codeViewSnippetCode) {
-                setOptions(Options.Default.get(requireContext()).withTheme(ColorTheme.MONOKAI))
-                setCode(
-                    """
-                    private var isBackPressed = false
-                    override fun onBackPressed() {
-                        if (!isBackPressed) {
-                        // If in fragment, use back pressed dispatcher
-                           Toast.makeText(this, "Press again to exit!", Toast.LENGTH_SHORT).show()
-                        } else {
-                            finish()
-                        }
-                    }
-                """.trimIndent(),
-                )
+        val args by navArgs<DetailFragmentArgs>()
+        model.getSnippet(args.snippetId).observe(viewLifecycleOwner) {
+            when (it) {
+                is State.Loading -> { binding.progressBar.show() }
+                is State.Error -> {
+                    binding.progressBar.hide()
+                    binding.root.errorSnackbar(it.message)
+                    findNavController().popBackStack()
+                }
+                is State.Success -> {
+                    binding.progressBar.hide()
+                    setupSnippet(it.data.snippets[0])
+                }
             }
+        }
+    }
 
+    private fun setupSnippet(snippet: Snippet) {
+        with (binding) {
+            textViewSnippetTitle.text = snippet.title
+            textViewSnippetDescription.text = snippet.description
+            imageViewSnippetOutputImage.load(snippet.imageUrl) {
+                transformations(RoundedCornersTransformation(16f))
+            }
+            inflateChips(layoutInflater, chipGroupSnippetTags, snippet.tags)
+            codeViewSnippetCode.apply {
+                setOptions(Options.Default.get(requireContext()).withTheme(ColorTheme.MONOKAI))
+                setCode(snippet.code ?: "An error occurred while loading the code!")
+            }
             buttonCopyCode.setOnClickListener {
-                Snackbar.make(binding.root, "Code Copied!", Snackbar.LENGTH_SHORT).show()
+                requireContext().copyToClipboard("Snippet Code", snippet.code ?: "")
             }
         }
     }
