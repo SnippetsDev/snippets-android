@@ -1,10 +1,14 @@
 package dev.snippets.util
 
+import android.content.Context
 import android.graphics.Color
 import android.util.Log
 import android.view.View
+import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.snippets.BuildConfig
+import dev.snippets.R
 
 fun log(vararg messages: String) {
     if (BuildConfig.DEBUG) {
@@ -29,6 +33,7 @@ fun View.hideWithAnimation() = run {
 
 fun View.errorSnackbar(message: String) = run {
     Snackbar.make(this, message, Snackbar.LENGTH_LONG)
+        .setTextColor(Color.WHITE)
         .setBackgroundTint(Color.parseColor("#B71C1C"))
         .show()
 }

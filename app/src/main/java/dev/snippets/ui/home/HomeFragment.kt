@@ -32,14 +32,19 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.listSnippets.setLayoutManager(LinearLayoutManager(context))
+
+
         model.getAllSnippets().observe(viewLifecycleOwner) {
             when (it) {
-                is State.Loading -> binding.progressBar.showWithAnimation()
+                is State.Loading -> binding.listSnippets.apply {
+                    addVeiledItems(15)
+                    veil()
+                }
                 is State.Error -> binding.root.errorSnackbar(it.message)
                 is State.Success -> {
-                    binding.progressBar.hideWithAnimation()
-                    binding.listSnippets.apply {
-                        layoutManager = LinearLayoutManager(context)
+                    binding.listSnippets.unVeil()
+                    binding.listSnippets.getRecyclerView().apply {
                         adapter = SnippetsListAdapter(requireContext(), it.data.snippets)
                     }
                 }
