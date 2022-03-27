@@ -30,5 +30,9 @@
         android:id="@+id/detailFragment"
         android:name="dev.snippets.ui.detail.DetailFragment"
         android:label="Detail"
-        tools:layout="@layout/fragment_detail" />
+        tools:layout="@layout/fragment_detail" >
+        <argument
+            android:name="snippetId"
+            app:argType="string" />
+    </fragment>
 </navigation>
