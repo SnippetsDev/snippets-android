@@ -63,33 +63,33 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
-        <com.sackcentury.shinebuttonlib.ShineButton
-            android:id="@+id/button_like"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toStartOf="@+id/button_bookmark"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageView_snippet_output"
-            android:layout_centerInParent="true"
-            app:btn_color="@color/snippet_button_like"
-            app:btn_fill_color="@color/snippet_button_like_clicked"
-            app:siShape="@drawable/outline_favorite_24"/>
+<!--        <com.sackcentury.shinebuttonlib.ShineButton-->
+<!--            android:id="@+id/button_like"-->
+<!--            android:layout_width="36dp"-->
+<!--            android:layout_height="36dp"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            app:layout_constraintEnd_toStartOf="@+id/button_bookmark"-->
+<!--            app:layout_constraintHorizontal_bias="0.5"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/imageView_snippet_output"-->
+<!--            android:layout_centerInParent="true"-->
+<!--            app:btn_color="@color/snippet_button_like"-->
+<!--            app:btn_fill_color="@color/snippet_button_like_clicked"-->
+<!--            app:siShape="@drawable/outline_favorite_24"/>-->
 
-        <com.sackcentury.shinebuttonlib.ShineButton
-            android:id="@+id/button_bookmark"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="8dp"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/button_like"
-            app:layout_constraintTop_toBottomOf="@id/imageView_snippet_output"
-            android:layout_centerInParent="true"
-            app:btn_color="@color/snippet_button_bookmark"
-            app:btn_fill_color="@color/snippet_button_bookmark_clicked"
-            app:siShape="@drawable/baseline_collections_bookmark_24"/>
+<!--        <com.sackcentury.shinebuttonlib.ShineButton-->
+<!--            android:id="@+id/button_bookmark"-->
+<!--            android:layout_width="36dp"-->
+<!--            android:layout_height="36dp"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            app:layout_constraintHorizontal_bias="0.5"-->
+<!--            app:layout_constraintStart_toEndOf="@+id/button_like"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/imageView_snippet_output"-->
+<!--            android:layout_centerInParent="true"-->
+<!--            app:btn_color="@color/snippet_button_bookmark"-->
+<!--            app:btn_fill_color="@color/snippet_button_bookmark_clicked"-->
+<!--            app:siShape="@drawable/baseline_collections_bookmark_24"/>-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

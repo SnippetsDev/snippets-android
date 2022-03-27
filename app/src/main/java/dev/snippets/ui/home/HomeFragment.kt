@@ -8,7 +8,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import dev.snippets.data.Snippet
 import dev.snippets.databinding.FragmentHomeBinding
+import dev.snippets.util.State
+import dev.snippets.util.errorSnackbar
+import dev.snippets.util.hideWithAnimation
+import dev.snippets.util.showWithAnimation
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -27,14 +32,18 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.listSnippets.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = SnippetsListAdapter(requireContext(), listOf(
-                "Exit Bottom Sheet Dialog",
-                "Double Back Button Press Exit",
-                "Basic RecyclerView with Single Line Text"
-            ))
+        model.getAllSnippets().observe(viewLifecycleOwner) {
+            when (it) {
+                is State.Loading -> binding.progressBar.showWithAnimation()
+                is State.Error -> binding.root.errorSnackbar(it.message)
+                is State.Success -> {
+                    binding.progressBar.hideWithAnimation()
+                    binding.listSnippets.apply {
+                        layoutManager = LinearLayoutManager(context)
+                        adapter = SnippetsListAdapter(requireContext(), it.data.snippets)
+                    }
+                }
+            }
         }
-        model.getAllSnippets()
     }
 }
