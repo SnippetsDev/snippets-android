@@ -1,7 +1,14 @@
 package dev.snippets.util
 
+import android.content.Context
+import android.graphics.Color
 import android.util.Log
+import android.view.View
+import androidx.core.content.ContextCompat
+import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.snippets.BuildConfig
+import dev.snippets.R
 
 fun log(vararg messages: String) {
     if (BuildConfig.DEBUG) {
@@ -9,4 +16,24 @@ fun log(vararg messages: String) {
             Log.d("SnippetsDebug", message)
         }
     }
+}
+
+fun View.show() = run { this.visibility = View.VISIBLE }
+
+fun View.hide() = run { this.visibility = View.GONE }
+
+fun View.showWithAnimation() = run {
+    this.show()
+    this.animate().alpha(1f).setDuration(500).start()
+}
+
+fun View.hideWithAnimation() = run {
+    this.animate().alpha(0f).setDuration(500).withEndAction { this.hide() }.start()
+}
+
+fun View.errorSnackbar(message: String) = run {
+    Snackbar.make(this, message, Snackbar.LENGTH_LONG)
+        .setTextColor(Color.WHITE)
+        .setBackgroundTint(Color.parseColor("#B71C1C"))
+        .show()
 }

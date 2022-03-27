@@ -7,4 +7,7 @@ interface Api {
 
     @GET("/snippets")
     suspend fun getAllSnippets(): Response<SnippetsApiResponse>
+
+    @GET("/tags")
+    suspend fun getAllTags(): Response<TagsApiResponse>
 }

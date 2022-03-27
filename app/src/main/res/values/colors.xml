@@ -14,4 +14,5 @@
     <color name="snippet_button_bookmark">#000000</color>
     <color name="snippet_button_like_clicked">#FF0000</color>
     <color name="snippet_button_bookmark_clicked">#007BFF</color>
+    <color name="error_snackbar_background">#B71C1C</color>
 </resources>
