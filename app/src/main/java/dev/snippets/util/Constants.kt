@@ -15,4 +15,7 @@ object Constants {
         "Swift",
         "TypeScript",
     )
+
+    const val KEY_INPUT_CODE_DIALOG = "key_input_code_dialog"
+    const val KEY_CODE = "key_code"
 }

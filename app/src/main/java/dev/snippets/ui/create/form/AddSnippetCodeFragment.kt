@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResultListener
 import com.google.modernstorage.permissions.RequestAccess
 import com.google.modernstorage.permissions.StoragePermissions
 import com.google.modernstorage.storage.AndroidFileSystem
@@ -15,8 +16,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.snippets.databinding.FragmentAddSnippetCodeBinding
 import dev.snippets.ui.create.CreateViewModel
 import dev.snippets.ui.create.InputCodeDialogFragment
+import dev.snippets.util.Constants
 import dev.snippets.util.errorSnackbar
 import dev.snippets.util.log
+import io.github.kbiakov.codeview.adapters.Options
+import io.github.kbiakov.codeview.highlight.ColorTheme
 import okio.buffer
 
 @AndroidEntryPoint
@@ -31,6 +35,10 @@ class AddSnippetCodeFragment : Fragment() {
         if (uri != null) {
             model.code = fileSystem.source(uri.toOkioPath()).buffer().readUtf8().also {
                 log("Received code: $it")
+                binding.codeViewSnippetCode.apply {
+                    setOptions(Options.Default.get(requireContext()).withTheme(ColorTheme.MONOKAI))
+                    setCode(it)
+                }
             }
         } else {
             binding.root.errorSnackbar("Failed to open file")
@@ -59,6 +67,14 @@ class AddSnippetCodeFragment : Fragment() {
 
         fileSystem = AndroidFileSystem(requireContext())
 
+        setFragmentResultListener(Constants.KEY_INPUT_CODE_DIALOG) { _, bundle ->
+            val code = bundle.getString(Constants.KEY_CODE)
+            model.code = code!!
+            binding.codeViewSnippetCode.apply {
+                setOptions(Options.Default.get(requireContext()).withTheme(ColorTheme.MONOKAI))
+                setCode(code)
+            }
+        }
 
         binding.buttonInputCode.setOnClickListener {
             InputCodeDialogFragment().show(parentFragmentManager, "INPUT_MODAL")
@@ -75,7 +91,11 @@ class AddSnippetCodeFragment : Fragment() {
         }
 
         binding.buttonPublishSnippet.setOnClickListener {
-            model.publishSnippet()
+            if (model.code.isNotEmpty()) {
+                model.publishSnippet()
+            } else {
+                binding.root.errorSnackbar("A snippet isn't much useful without code!")
+            }
         }
     }
 }

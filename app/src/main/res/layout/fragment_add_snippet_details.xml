@@ -27,9 +27,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:hint="Snippet Tags*"
+        android:hint="Snippet Tags (Comma Separated)*"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:helperText="E.g. Django, React, Android, etc"
         app:layout_constraintTop_toBottomOf="@id/textField_snippet_title">
 
         <com.google.android.material.textfield.TextInputEditText

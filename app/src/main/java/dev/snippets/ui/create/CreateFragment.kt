@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -12,11 +13,12 @@ import dev.snippets.databinding.FragmentCreateBinding
 import dev.snippets.ui.create.form.AddSnippetCodeFragment
 import dev.snippets.ui.create.form.AddSnippetDetailsFragment
 import dev.snippets.ui.create.form.AddSnippetImageFragment
+import dev.snippets.util.DepthPageTransformer
 
 @AndroidEntryPoint
 class CreateFragment : Fragment() {
     private lateinit var binding: FragmentCreateBinding
-    private val model by viewModels<CreateViewModel>()
+    private val model by activityViewModels<CreateViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,6 +35,7 @@ class CreateFragment : Fragment() {
 
         binding.formPager.adapter = ScreenSlidePagerAdapter(this)
         binding.formPager.isUserInputEnabled = false
+        binding.formPager.setPageTransformer(DepthPageTransformer())
     }
 
     fun nextPage() {

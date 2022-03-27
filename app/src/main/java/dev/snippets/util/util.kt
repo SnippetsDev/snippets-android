@@ -37,3 +37,5 @@ fun View.errorSnackbar(message: String) = run {
         .setBackgroundTint(Color.parseColor("#B71C1C"))
         .show()
 }
+
+fun String.isValidLanguageChoice() = Constants.listOfLanguages.find { it == this } != null

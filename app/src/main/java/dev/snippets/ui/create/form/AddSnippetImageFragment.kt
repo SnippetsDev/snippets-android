@@ -38,6 +38,7 @@ class AddSnippetImageFragment : Fragment() {
             model.imageUri = data?.data!!.also {
                 log("Received uri: $it")
             }
+            binding.imageViewResult.setImageURI(model.imageUri)
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
             binding.root.errorSnackbar(ImagePicker.getError(data))
         }
@@ -65,7 +66,7 @@ class AddSnippetImageFragment : Fragment() {
         }
 
         binding.buttonNext.setOnClickListener {
-            (parentFragment as CreateFragment).nextPage()
+            if (!model.uploading) (parentFragment as CreateFragment).nextPage()
         }
     }
 }
