@@ -8,6 +8,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
+import androidx.navigation.fragment.findNavController
 import com.google.modernstorage.permissions.RequestAccess
 import com.google.modernstorage.permissions.StoragePermissions
 import com.google.modernstorage.storage.AndroidFileSystem
@@ -16,9 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.snippets.databinding.FragmentAddSnippetCodeBinding
 import dev.snippets.ui.create.CreateViewModel
 import dev.snippets.ui.create.InputCodeDialogFragment
-import dev.snippets.util.Constants
-import dev.snippets.util.errorSnackbar
-import dev.snippets.util.log
+import dev.snippets.util.*
 import io.github.kbiakov.codeview.adapters.Options
 import io.github.kbiakov.codeview.highlight.ColorTheme
 import okio.buffer
@@ -92,7 +91,20 @@ class AddSnippetCodeFragment : Fragment() {
 
         binding.buttonPublishSnippet.setOnClickListener {
             if (model.code.isNotEmpty()) {
-                model.publishSnippet()
+                model.publishSnippet().observe(viewLifecycleOwner) {
+                    when (it) {
+                        is State.Loading -> binding.progressBar.showWithAnimation()
+                        is State.Error -> {
+                            binding.progressBar.hideWithAnimation()
+                            binding.root.errorSnackbar(it.message)
+                        }
+                        is State.Success -> {
+                            binding.progressBar.hideWithAnimation()
+                            binding.root.shortSnackbar("Snippet published!")
+                            findNavController().popBackStack()
+                        }
+                    }
+                }
             } else {
                 binding.root.errorSnackbar("A snippet isn't much useful without code!")
             }

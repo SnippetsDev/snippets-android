@@ -40,6 +40,10 @@ fun View.errorSnackbar(message: String) = run {
         .show()
 }
 
+fun View.shortSnackbar(message: String) = run {
+    Snackbar.make(this, message, Snackbar.LENGTH_SHORT).show()
+}
+
 fun String.isValidLanguageChoice() = Constants.listOfLanguages.find { it == this } != null
 
 fun getFormattedDateTime(): String = run {

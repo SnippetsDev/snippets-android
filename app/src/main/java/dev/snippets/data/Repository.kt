@@ -41,6 +41,14 @@ class Repository (
         }
     }
 
+    fun publishSnippet(snippet: Snippet) = liveData {
+        emit(State.Loading)
+        val state = dataOrError {
+            api.publishSnippet(snippet)
+        }
+        emit(state)
+    }
+
     /**
      * This is a really common pattern where the API call result needs to be checked for errors.
      * This method simplifies the error handling and returns the data if successful, error message otherwise
