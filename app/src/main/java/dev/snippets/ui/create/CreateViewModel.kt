@@ -12,6 +12,28 @@ class CreateViewModel @Inject constructor(
     private val repo: Repository
 ) : ViewModel() {
 
+    var title = ""
     var imageUri = "".toUri()
     var code = ""
+    var tags = ""
+    var description = ""
+    var language = ""
+
+    init {
+        reset()
+    }
+
+    fun reset() {
+        title = ""
+        imageUri = "".toUri()
+        code = ""
+        tags = ""
+        description = ""
+        language = ""
+
+    }
+
+    fun publishSnippet() {
+
+    }
 }
