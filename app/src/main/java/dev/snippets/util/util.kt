@@ -9,6 +9,8 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.snippets.BuildConfig
 import dev.snippets.R
+import java.text.SimpleDateFormat
+import java.util.*
 
 fun log(vararg messages: String) {
     if (BuildConfig.DEBUG) {
@@ -39,3 +41,15 @@ fun View.errorSnackbar(message: String) = run {
 }
 
 fun String.isValidLanguageChoice() = Constants.listOfLanguages.find { it == this } != null
+
+fun getFormattedDateTime(): String = run {
+    SimpleDateFormat("dd/MM/yy hh:mm aaa", Locale.ENGLISH).format(System.currentTimeMillis())
+}
+
+fun getUuid() = UUID.randomUUID().toString()
+
+fun getUniqueNameForImage() = "${getUuid()} ${getFormattedDateTime()}"
+
+fun View.disable() = run { this.isEnabled = false }
+
+fun View.enable() = run { this.isEnabled = true }

@@ -1,13 +1,13 @@
 package dev.snippets.ui.create
 
 import android.net.Uri
-import androidx.core.net.toUri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.snippets.data.Repository
-import dev.snippets.util.Constants
-import io.github.kbiakov.codeview.Const
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,7 +22,7 @@ class CreateViewModel @Inject constructor(
     var description = ""
     var language = ""
 
-    var uploading = MutableLiveData<Boolean>()
+    var uploading = MutableLiveData(false)
 
     init {
         reset()
@@ -43,4 +43,7 @@ class CreateViewModel @Inject constructor(
     fun publishSnippet() {
 
     }
+
+    fun uploadImageToFirebase() = if (imageUri != null)
+        repo.uploadImageToFirebase(imageUri!!) else throw IllegalStateException("Image Uri is null")
 }

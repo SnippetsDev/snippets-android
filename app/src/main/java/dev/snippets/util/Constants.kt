@@ -11,6 +11,7 @@ object Constants {
         "Kotlin",
         "Python",
         "Ruby",
+        "Rust",
         "Scala",
         "Swift",
         "TypeScript",

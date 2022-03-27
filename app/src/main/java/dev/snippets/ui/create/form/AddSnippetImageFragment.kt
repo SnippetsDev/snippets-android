@@ -13,8 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.snippets.databinding.FragmentAddSnippetImageBinding
 import dev.snippets.ui.create.CreateFragment
 import dev.snippets.ui.create.CreateViewModel
-import dev.snippets.util.errorSnackbar
-import dev.snippets.util.log
+import dev.snippets.util.*
 
 @AndroidEntryPoint
 class AddSnippetImageFragment : Fragment() {
@@ -38,7 +37,7 @@ class AddSnippetImageFragment : Fragment() {
             model.imageUri = data?.data!!.also {
                 log("Received uri: $it")
             }
-            binding.imageViewResult.setImageURI(model.imageUri)
+            trackImageUpload()
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
             binding.root.errorSnackbar(ImagePicker.getError(data))
         }
@@ -66,7 +65,27 @@ class AddSnippetImageFragment : Fragment() {
         }
 
         binding.buttonNext.setOnClickListener {
-            if (!model.uploading) (parentFragment as CreateFragment).nextPage()
+            (parentFragment as CreateFragment).nextPage()
+        }
+    }
+
+    private fun trackImageUpload() {
+        model.uploadImageToFirebase().observe(viewLifecycleOwner) {
+            when(it) {
+                is State.Loading -> {
+                    binding.progressBar.show()
+                    binding.buttonNext.disable()
+                }
+                is State.Error -> {
+                    binding.progressBar.hide()
+                    binding.root.errorSnackbar(it.message)
+                }
+                is State.Success -> {
+                    binding.progressBar.hide()
+                    binding.buttonNext.enable()
+                    binding.imageViewResult.setImageURI(model.imageUri)
+                }
+            }
         }
     }
 }
