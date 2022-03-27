@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.setFragmentResult
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dev.snippets.databinding.FragmentInputCodeDialogBinding
+import dev.snippets.util.Constants
 
 class InputCodeDialogFragment : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentInputCodeDialogBinding
@@ -29,7 +31,14 @@ class InputCodeDialogFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.buttonDone.setOnClickListener {
-            dismiss()
+            if (binding.textFieldInputCode.editText?.text.isNullOrEmpty()) {
+                binding.textFieldInputCode.error = "Code cannot be empty"
+            } else {
+                setFragmentResult(Constants.KEY_INPUT_CODE_DIALOG, Bundle().apply {
+                    putString(Constants.KEY_CODE, binding.textFieldInputCode.editText?.text.toString())
+                })
+                dismiss()
+            }
         }
 
         binding.buttonCancel.setOnClickListener {

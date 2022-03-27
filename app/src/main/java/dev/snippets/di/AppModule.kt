@@ -1,14 +1,17 @@
 package dev.snippets.di
 
+import android.content.Context
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.snippets.BuildConfig
 import dev.snippets.data.Api
 import dev.snippets.data.Repository
+import dev.snippets.data.SharedPrefHelper
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -45,4 +48,8 @@ object AppModule {
     @Singleton
     @Provides
     fun provideRepository(api: Api) = Repository(api)
+
+    @Singleton
+    @Provides
+    fun provideSharedPref(@ApplicationContext context: Context) = SharedPrefHelper(context)
 }
