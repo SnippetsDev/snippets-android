@@ -24,7 +24,7 @@ android {
             buildConfigField("String", "BASE_URL", "\"http://localhost:8000\"")
         }
         release {
-            buildConfigField("String", "BASE_URL", "\"https://https://snippetsworld.el.r.appspot.com/\"")
+            buildConfigField("String", "BASE_URL", "\"https://snippetsworld.el.r.appspot.com/\"")
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
