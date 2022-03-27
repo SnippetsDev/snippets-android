@@ -8,30 +8,37 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.RoundedCornersTransformation
+import com.google.android.material.chip.Chip
 import dev.snippets.R
 import dev.snippets.data.Snippet
 import dev.snippets.databinding.LayoutSnippetBinding
 
-class SnippetsListAdapter(context: Context, private val snippets: List<Snippet>) :
+class SnippetsListAdapter(private val context: Context, private val snippets: List<Snippet>) :
     RecyclerView.Adapter<SnippetsListAdapter.ViewHolder>() {
 
-    class ViewHolder(val binding: LayoutSnippetBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class ViewHolder(val binding: LayoutSnippetBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(snippet: Snippet) {
+            with (binding) {
+                textViewSnippetTitle.text= snippet.title
+                textViewSnippetDescription.text = snippet.description
+                imageViewSnippetOutput.load(snippet.imageUrl) {
+                    transformations(RoundedCornersTransformation(20f))
+                }
+                for (tag in snippet.tags) {
+                    val chip = LayoutInflater.from(context).inflate(R.layout.layout_chip_tag, chipGroupSnippetTags, false) as Chip
+                    chip.text = tag
+                    chipGroupSnippetTags.addView(chip)
+                }
+            }
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(LayoutSnippetBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.textViewSnippetTitle.text = snippets[position].title
-        holder.binding.textViewSnippetDescription.text = snippets[position].description
-        holder.binding.imageViewSnippetOutput.load(snippets[position].imageUrl) {
-            transformations(RoundedCornersTransformation(20f))
-        }
-
-        holder.binding.root.setOnClickListener {
-            holder.binding.root.findNavController().navigate(R.id.action_homeFragment_to_detailFragment)
-        }
-        // Chip inflation omitted for now
+        holder.bind(snippets[position])
     }
 
     override fun getItemCount() = snippets.size
