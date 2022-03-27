@@ -68,4 +68,17 @@ dependencies {
 
     implementation "com.github.skydoves:androidveil:1.1.2"
     implementation 'com.github.dhaval2404:imagepicker:2.1'
+    // For storage permissions checking
+    implementation("com.google.modernstorage:modernstorage-permissions:1.0.0-alpha06")
+
+// For storage interactions using Okio FileSystem API
+    implementation("com.google.modernstorage:modernstorage-storage:1.0.0-alpha06")
+
+    // build.gradle
+
+// modernstorage-storage requires Okio 3.x.x as a dependency
+    implementation("com.squareup.okio:okio:3.0.0")
+    implementation("com.google.modernstorage:modernstorage-storage:1.0.0-alpha06")
+
+
 }

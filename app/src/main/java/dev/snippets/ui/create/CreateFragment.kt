@@ -12,11 +12,16 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.github.dhaval2404.imagepicker.ImagePicker
+import com.google.modernstorage.permissions.RequestAccess
+import com.google.modernstorage.permissions.StoragePermissions
+import com.google.modernstorage.storage.AndroidFileSystem
+import com.google.modernstorage.storage.toOkioPath
 import dagger.hilt.android.AndroidEntryPoint
 import dev.snippets.databinding.FragmentCreateBinding
 import dev.snippets.util.Constants
 import dev.snippets.util.errorSnackbar
 import dev.snippets.util.log
+import okio.buffer
 
 @AndroidEntryPoint
 class CreateFragment : Fragment() {
@@ -32,10 +37,45 @@ class CreateFragment : Fragment() {
         return binding.root
     }
 
+    private lateinit var fileSystem: AndroidFileSystem
+
+    private val requestFile = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+        if (uri != null) {
+            model.code = fileSystem.source(uri.toOkioPath()).buffer().readUtf8().also {
+                log("Received code: $it")
+            }
+        } else {
+            binding.root.errorSnackbar("Failed to open file")
+        }
+    }
+
+    private val requestStorageAccess = registerForActivityResult(RequestAccess()) { hasAccess ->
+        if (!hasAccess) {
+            requestFile.launch(arrayOf("text/*"))
+        } else {
+            binding.root.errorSnackbar("Can't access files without storage permissions!")
+        }
+    }
+
+    private val startForImageResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        val resultCode = result.resultCode
+        val data = result.data
+
+        if (resultCode == Activity.RESULT_OK) {
+            model.imageUri = data?.data!!.also {
+                log("Received uri: $it")
+            }
+        } else if (resultCode == ImagePicker.RESULT_ERROR) {
+            binding.root.errorSnackbar(ImagePicker.getError(data))
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setupViews()
+
+        fileSystem = AndroidFileSystem(requireContext())
     }
 
     private fun setupViews() {
@@ -70,19 +110,16 @@ class CreateFragment : Fragment() {
                     Constants.listOfLanguages
                 )
             )
-        }
-    }
 
-    private val startForImageResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        val resultCode = result.resultCode
-        val data = result.data
-
-        if (resultCode == Activity.RESULT_OK) {
-            //Image Uri will not be null for RESULT_OK
-            model.imageUri = data?.data!!
-            log("Received uri: ${model.imageUri}")
-        } else if (resultCode == ImagePicker.RESULT_ERROR) {
-            binding.root.errorSnackbar(ImagePicker.getError(data))
+            binding.buttonSelectFileFromDevice.setOnClickListener {
+                requestStorageAccess.launch(
+                    RequestAccess.Args(
+                        action = StoragePermissions.Action.READ,
+                        types = listOf(StoragePermissions.FileType.Document),
+                        createdBy = StoragePermissions.CreatedBy.AllApps
+                    )
+                )
+            }
         }
     }
 }

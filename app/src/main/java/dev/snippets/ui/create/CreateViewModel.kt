@@ -13,4 +13,5 @@ class CreateViewModel @Inject constructor(
 ) : ViewModel() {
 
     var imageUri = "".toUri()
+    var code = ""
 }
