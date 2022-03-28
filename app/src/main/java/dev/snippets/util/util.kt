@@ -63,9 +63,9 @@ fun View.disable() = run { this.isEnabled = false }
 
 fun View.enable() = run { this.isEnabled = true }
 
-fun inflateChips(inflater: LayoutInflater, chipGroup: ChipGroup, items: List<String>) {
+fun inflateChips(inflater: LayoutInflater, chipGroup: ChipGroup, items: List<String>, layout: Int) {
     for (item in items) {
-        val chip = inflater.inflate(R.layout.layout_chip_tag, chipGroup, false) as Chip
+        val chip = inflater.inflate(layout, chipGroup, false) as Chip
         chip.text = item
         chipGroup.addView(chip)
     }

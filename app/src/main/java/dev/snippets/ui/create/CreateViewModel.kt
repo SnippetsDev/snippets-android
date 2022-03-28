@@ -9,6 +9,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.snippets.data.Repository
 import dev.snippets.data.SharedPrefHelper
 import dev.snippets.data.Snippet
+import dev.snippets.util.State
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -22,24 +23,25 @@ class CreateViewModel @Inject constructor(
     var title = ""
     var imageUri: Uri? = null
     var code = ""
-    var tags = ""
+    var tags = mutableListOf<String>()
     var description = ""
     var language = ""
+    val tagsList = MutableLiveData<State<List<String>>>()
 
-    var uploading = MutableLiveData(false)
-
-    init {
-        reset()
-    }
 
     fun reset() {
         title = ""
         imageUri = null
         code = ""
-        tags = ""
+        tags = mutableListOf()
         description = ""
         language = ""
-
+        viewModelScope.launch {
+            tagsList.value = State.Loading
+            val response = repo.getAllTags()
+            tagsList.value =
+                if (response is State.Success) State.Success(response.data.tags) else State.Error((response as State.Error).message)
+        }
     }
 
     fun canMoveToAddImage() = title.isNotEmpty() && tags.isNotEmpty() && language.isNotEmpty()
@@ -49,7 +51,7 @@ class CreateViewModel @Inject constructor(
         title,
         language,
         description,
-        tags.split(",").map { it.trim() },
+        tags,
         imageUri.toString(),
         code
     ))
