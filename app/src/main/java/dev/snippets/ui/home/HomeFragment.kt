@@ -1,5 +1,6 @@
 package dev.snippets.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,8 +10,8 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import dev.snippets.R
-import dev.snippets.data.Snippet
 import dev.snippets.databinding.FragmentHomeBinding
+import dev.snippets.ui.onboarding.OnboardingActivity
 import dev.snippets.util.*
 
 @AndroidEntryPoint
@@ -29,6 +30,10 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if (model.isNewUser()) startActivity(
+            Intent(requireActivity(), OnboardingActivity::class.java).also { it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK }
+        )
 
         binding.listSnippets.setLayoutManager(LinearLayoutManager(context))
 
