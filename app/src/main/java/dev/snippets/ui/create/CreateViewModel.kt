@@ -3,6 +3,7 @@ package dev.snippets.ui.create
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -26,8 +27,19 @@ class CreateViewModel @Inject constructor(
     var tags = mutableListOf<String>()
     var description = ""
     var language = ""
-    val tagsList = MutableLiveData<State<List<String>>>()
 
+    var listTags = listOf<String>()
+
+    fun getTags() = liveData {
+        emit(State.Loading)
+        val response = repo.getAllTags()
+        if (response is State.Success) {
+            listTags = response.data.tags
+            emit(State.Success(response.data))
+        } else if (response is State.Error) {
+            emit(State.Error(response.message))
+        }
+    }
 
     fun reset() {
         title = ""
@@ -36,12 +48,6 @@ class CreateViewModel @Inject constructor(
         tags = mutableListOf()
         description = ""
         language = ""
-        viewModelScope.launch {
-            tagsList.value = State.Loading
-            val response = repo.getAllTags()
-            tagsList.value =
-                if (response is State.Success) State.Success(response.data.tags) else State.Error((response as State.Error).message)
-        }
     }
 
     fun canMoveToAddImage() = title.isNotEmpty() && tags.isNotEmpty() && language.isNotEmpty()
