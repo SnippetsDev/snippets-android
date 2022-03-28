@@ -57,7 +57,7 @@ class HomeFragment : Fragment() {
                 is State.Error -> {
                     binding.root.errorSnackbar(it.message)
                     binding.lottie.setAnimation(R.raw.error)
-                    binding.listSnippets.hideWithAnimation()
+                    binding.listSnippets.hide()
                     binding.lottie.showWithAnimation()
                 }
                 is State.Success -> {
