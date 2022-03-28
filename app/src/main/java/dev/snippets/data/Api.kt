@@ -14,6 +14,9 @@ interface Api {
     @GET("/tags")
     suspend fun getAllTags(): Response<TagsApiResponse>
 
+    @GET("/snippets")
+    suspend fun getSnippetsForTags(@Query("tags", encoded = true) tags: String): Response<SnippetsApiResponse>
+
     @POST("/snippets")
     suspend fun publishSnippet(@Body snippet: Snippet): Response<PostResponse>
 }
