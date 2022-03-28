@@ -60,7 +60,7 @@ class DetailFragment : Fragment() {
             imageViewSnippetOutputImage.load(snippet.imageUrl) {
                 transformations(RoundedCornersTransformation(16f))
             }
-            inflateChips(layoutInflater, chipGroupSnippetTags, snippet.tags)
+            inflateChips(layoutInflater, chipGroupSnippetTags, snippet.tags, R.layout.layout_chip_tag)
             codeViewSnippetCode.apply {
                 setOptions(Options.Default.get(requireContext()).withTheme(ColorTheme.MONOKAI))
                 setCode(snippet.code ?: "An error occurred while loading the code!")

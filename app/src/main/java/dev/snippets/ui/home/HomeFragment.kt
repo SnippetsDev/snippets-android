@@ -55,23 +55,24 @@ class HomeFragment : Fragment() {
                     }
                 }
                 is State.Error -> {
+                    binding.layoutSwipeRefresh.isRefreshing = false
                     binding.root.errorSnackbar(it.message)
                     binding.lottie.setAnimation(R.raw.error)
-                    binding.listSnippets.hideWithAnimation()
+                    binding.listSnippets.hide()
                     binding.lottie.showWithAnimation()
                 }
                 is State.Success -> {
+                    binding.layoutSwipeRefresh.isRefreshing = false
                     if (it.data.snippets.isEmpty()) {
                         binding.listSnippets.hideWithAnimation()
-                        binding.lottie.showWithAnimation()
                         binding.lottie.setAnimation(R.raw.empty)
+                        binding.lottie.showWithAnimation()
                     } else {
                         binding.lottie.hide()
                         binding.listSnippets.unVeil()
                         binding.listSnippets.getRecyclerView().apply {
                             adapter = SnippetsListAdapter(requireContext(), it.data.snippets)
                         }
-                        binding.layoutSwipeRefresh.isRefreshing = false
                         binding.listSnippets.showWithAnimation()
                     }
                 }
