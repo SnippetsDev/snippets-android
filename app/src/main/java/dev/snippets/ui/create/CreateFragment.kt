@@ -31,8 +31,8 @@ class CreateFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        model.reset()
 
+        binding.formPager.currentItem = 0
         binding.formPager.adapter = ScreenSlidePagerAdapter(this)
         binding.formPager.isUserInputEnabled = false
         binding.formPager.setPageTransformer(DepthPageTransformer())
