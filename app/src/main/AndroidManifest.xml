@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Snippets"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.onboarding.OnboardingActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.launch.LaunchActivity"
             android:exported="true">
             <intent-filter>
