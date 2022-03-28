@@ -3,6 +3,8 @@ package dev.snippets.data
 import android.content.Context
 import androidx.core.content.edit
 import dev.snippets.util.Constants
+import dev.snippets.util.toListOfStrings
+import dev.snippets.util.toStringWithCommas
 
 class SharedPrefHelper(private val context: Context) {
     private val sharedPreferences = context.getSharedPreferences("dev.snippets.data", Context.MODE_PRIVATE)
@@ -16,4 +18,14 @@ class SharedPrefHelper(private val context: Context) {
         }
         return false
     }
+
+    fun isNewUser() = sharedPreferences.getString(Constants.KEY_USER_PREFERRED_TAGS, "").isNullOrEmpty()
+
+    fun saveUserPreferredTags(tags: List<String>) {
+        sharedPreferences.edit {
+            putString(Constants.KEY_USER_PREFERRED_TAGS, tags.toStringWithCommas())
+        }
+    }
+
+    fun getUserPreferredTags() = sharedPreferences.getString(Constants.KEY_USER_PREFERRED_TAGS, "")!!.toListOfStrings()
 }
