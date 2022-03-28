@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.github.dhaval2404.imagepicker.ImagePicker
@@ -84,6 +85,7 @@ class AddSnippetImageFragment : Fragment() {
                     binding.progressBar.hide()
                     binding.buttonNext.enable()
                     binding.imageViewResult.setImageURI(model.imageUri)
+                    model.imageUri = it.data.toUri()
                 }
             }
         }
