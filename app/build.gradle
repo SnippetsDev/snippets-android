@@ -96,4 +96,7 @@ dependencies {
     implementation 'nl.dionsegijn:konfetti-xml:2.0.2'
     implementation "com.airbnb.android:lottie:5.0.3"
 
+    implementation 'com.hanks:htextview-base:0.1.6'
+    implementation "com.hanks:htextview-fade:0.1.6"
+
 }

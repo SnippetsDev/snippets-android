@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.snackbar.Snackbar
+import com.squareup.moshi.Moshi
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.snippets.BuildConfig
 import dev.snippets.R
@@ -30,8 +31,11 @@ fun View.show() = run { this.visibility = View.VISIBLE }
 fun View.hide() = run { this.visibility = View.GONE }
 
 fun View.showWithAnimation() = run {
-    this.show()
-    this.animate().alpha(1f).setDuration(500).start()
+    this.apply {
+        alpha = 0f
+        visibility = View.VISIBLE
+        animate().alpha(1f).duration = 500.toLong()
+    }
 }
 
 fun View.hideWithAnimation() = run {
@@ -63,10 +67,11 @@ fun View.disable() = run { this.isEnabled = false }
 
 fun View.enable() = run { this.isEnabled = true }
 
-fun inflateChips(inflater: LayoutInflater, chipGroup: ChipGroup, items: List<String>, layout: Int) {
+fun inflateChips(inflater: LayoutInflater, chipGroup: ChipGroup, items: List<String>, layout: Int, compress: Boolean = true) {
     for (item in items) {
         val chip = inflater.inflate(layout, chipGroup, false) as Chip
         chip.text = item
+        chip.setEnsureMinTouchTargetSize(compress)
         chipGroup.addView(chip)
     }
 }
@@ -75,3 +80,9 @@ fun Context.copyToClipboard(clipLabel: String, text: CharSequence){
     val clipboard = ContextCompat.getSystemService(this, ClipboardManager::class.java)
     clipboard?.setPrimaryClip(ClipData.newPlainText(clipLabel, text))
 }
+
+// Converts a list of Strings to a String with each item separated by a comma
+fun List<String>.toStringWithCommas(): String = this.joinToString(", ")
+
+// Converts comma separated String to a list of Strings
+fun String.toListOfStrings(): List<String> = this.split(",")
