@@ -82,7 +82,7 @@ fun Context.copyToClipboard(clipLabel: String, text: CharSequence){
 }
 
 // Converts a list of Strings to a String with each item separated by a comma
-fun List<String>.toStringWithCommas(): String = this.joinToString(", ")
+fun List<String>.toStringWithCommas(): String = this.joinToString(",")
 
 // Converts comma separated String to a list of Strings
 fun String.toListOfStrings(): List<String> = this.split(",")

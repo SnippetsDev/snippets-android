@@ -18,6 +18,8 @@ import kotlin.coroutines.coroutineContext
 class Repository (
     private val api: Api
 ) {
+    suspend fun getSnippetsWithPreferredTags(tags: String) = dataOrError { api.getSnippetsForTags(tags) }
+
     suspend fun getAllSnippets() = dataOrError { api.getAllSnippets() }
 
     suspend fun getAllTags() = dataOrError { api.getAllTags() }

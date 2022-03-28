@@ -49,7 +49,7 @@ class HomeFragment : Fragment() {
      * feature, so this fixes it.
      */
     private fun renderSnippets() {
-        model.getAllSnippets().observe(viewLifecycleOwner) {
+        model.getSnippetsWithPreferredTags().observe(viewLifecycleOwner) {
             when (it) {
                 is State.Loading -> {
                     binding.lottie.hide()
