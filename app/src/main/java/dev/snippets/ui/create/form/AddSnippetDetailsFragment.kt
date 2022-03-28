@@ -36,25 +36,34 @@ class AddSnippetDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         model.reset()
+        getTags()
 
-        model.tagsList.observe(viewLifecycleOwner) {
-            when (it) {
-                is State.Loading -> {
-                    binding.layoutNormal.hide()
-                    binding.progressBar.showWithAnimation()
-                }
-                is State.Error -> {
-                    binding.progressBar.hide()
-                    binding.root.errorSnackbar(it.message)
-                }
-                is State.Success -> {
-                    binding.progressBar.hide()
-                    loadView()
-                    binding.layoutNormal.showWithAnimation()
-                }
-            }
-        }
+        binding.buttonRetry.setOnClickListener { getTags() }
     }
+
+   private fun getTags() {
+       model.getTags().observe(viewLifecycleOwner) {
+           when (it) {
+               is State.Loading -> {
+                   binding.layoutNormal.hide()
+                   binding.layoutError.hide()
+                   binding.progressBar.showWithAnimation()
+               }
+               is State.Error -> {
+                   binding.progressBar.hide()
+                   binding.layoutNormal.hide()
+                   binding.layoutError.showWithAnimation()
+                   binding.root.errorSnackbar(it.message)
+               }
+               is State.Success -> {
+                   binding.progressBar.hide()
+                   binding.layoutError.hide()
+                   loadView()
+                   binding.layoutNormal.showWithAnimation()
+               }
+           }
+       }
+   }
 
     private fun loadView() {
         (binding.textFieldLanguage.editText as? AutoCompleteTextView)?.setAdapter(
@@ -74,7 +83,7 @@ class AddSnippetDetailsFragment : Fragment() {
             model.title = text.toString()
         }
 
-        inflateChips(layoutInflater, binding.chipGroupTags, (model.tagsList.value as? State.Success)?.data ?: emptyList(), R.layout.layout_filter_chip)
+        inflateChips(layoutInflater, binding.chipGroupTags, model.listTags, R.layout.layout_filter_chip)
 
         binding.textFieldSnippetDescription.editText?.doOnTextChanged { text, _, _, _ ->
             if (text.isNullOrEmpty()) {
@@ -101,12 +110,18 @@ class AddSnippetDetailsFragment : Fragment() {
         }
 
         binding.buttonNext.setOnClickListener {
+            model.tags.clear()
             for (chip in binding.chipGroupTags.children) {
                 (chip as? Chip)?.let {
                     if (it.isChecked) {
                         model.tags.add(it.text.toString())
                     }
                 }
+            }
+
+            if (model.tags.size > 3) {
+                binding.root.errorSnackbar("Please select 3 tags at most")
+                return@setOnClickListener
             }
 
             if (model.canMoveToAddImage()) {
