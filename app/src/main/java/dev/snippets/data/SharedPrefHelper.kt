@@ -27,5 +27,5 @@ class SharedPrefHelper(private val context: Context) {
         }
     }
 
-    fun getUserPreferredTags() = sharedPreferences.getString(Constants.KEY_USER_PREFERRED_TAGS, "")!!.toListOfStrings()
+    fun getUserPreferredTags() = sharedPreferences.getString(Constants.KEY_USER_PREFERRED_TAGS, "")!!
 }
