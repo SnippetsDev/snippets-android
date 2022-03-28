@@ -8,6 +8,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.google.modernstorage.permissions.RequestAccess
 import com.google.modernstorage.permissions.StoragePermissions
 import com.google.modernstorage.storage.AndroidFileSystem
@@ -19,6 +22,8 @@ import dev.snippets.ui.create.InputCodeDialogFragment
 import dev.snippets.util.*
 import io.github.kbiakov.codeview.adapters.Options
 import io.github.kbiakov.codeview.highlight.ColorTheme
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import nl.dionsegijn.konfetti.core.Party
 import nl.dionsegijn.konfetti.core.emitter.Emitter
 import okio.buffer
@@ -108,6 +113,10 @@ class AddSnippetCodeFragment : Fragment() {
                                 binding.konfetti.start(Party(
                                     emitter = Emitter(duration = 3, TimeUnit.SECONDS).perSecond(30)
                                 ))
+                            }
+                            lifecycleScope.launch {
+                                delay(3000)
+                                findNavController().popBackStack()
                             }
                         }
                     }
