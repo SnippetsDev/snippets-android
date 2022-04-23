@@ -63,6 +63,7 @@ dependencies {
     // Navigation
     implementation 'androidx.navigation:navigation-fragment-ktx:2.4.1'
     implementation 'androidx.navigation:navigation-ui-ktx:2.4.1'
+    implementation 'com.google.android.flexbox:flexbox:3.0.0'
 
     // Buttons with Shine Effect for Bookmarking
     implementation 'com.sackcentury:shinebutton:1.0.0'

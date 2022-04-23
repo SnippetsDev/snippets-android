@@ -39,13 +39,10 @@ class AuthViewModel @Inject constructor(
         delay(1000)
         sharedPref.user = User(
             "0",
-            "Guido van Rossum",
-            "guido@python.org",
-            "https://pbs.twimg.com/profile_images/424495004/GuidoAvatar_400x400.jpg",
-            "Creator of the Python programming language.\n" +
-                    "        Holds a Master\\'s degree in Computer Science and Mathematics.\n" +
-                    "        Previously Senior Staff Engineer @ Google, Principal Engineer @ Dropbox.\n" +
-                    "        Currently Distinguished Engineer @ Microsoft.",
+            "Linus Torvalds",
+            "torvalds@linux-foundation.org",
+            "https://i.pcmag.com/imagery/articles/040JHoVNgc1gh2e7sunj82k-1.fit_lim.size_1600x900.v1569492349.png",
+            "Creator and Maintainer of Linux and Git, basically the reason for most developers' jobs",
             emptyList()
         )
         emit(State.Success(true))
