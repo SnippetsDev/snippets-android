@@ -1,4 +1,4 @@
-package dev.snippets.ui.onboarding
+package dev.snippets.ui.auth
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
@@ -6,10 +6,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.snippets.data.Repository
 import dev.snippets.data.SharedPrefHelper
 import dev.snippets.util.State
+import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 @HiltViewModel
-class OnboardingViewModel @Inject constructor(
+class AuthViewModel @Inject constructor(
     private val repo: Repository,
     private val sharedPref: SharedPrefHelper
 ) : ViewModel() {
@@ -27,4 +28,10 @@ class OnboardingViewModel @Inject constructor(
     }
 
     fun setPreferredTags() = sharedPref.saveUserPreferredTags(listTags)
+
+    fun loginWithGithub(token: String) = liveData {
+        emit(State.Loading)
+        delay(1000)
+        emit(State.Success(true))
+    }
 }
