@@ -2,6 +2,9 @@ package dev.snippets.data
 
 import android.content.Context
 import androidx.core.content.edit
+import dev.snippets.data.models.User
+import dev.snippets.data.models.toJson
+import dev.snippets.data.models.toUser
 import dev.snippets.util.Constants
 import dev.snippets.util.toListOfStrings
 import dev.snippets.util.toStringWithCommas
@@ -28,4 +31,10 @@ class SharedPrefHelper(private val context: Context) {
     }
 
     fun getUserPreferredTags() = sharedPreferences.getString(Constants.KEY_USER_PREFERRED_TAGS, "")!!
+
+    var user: User
+    get() = (sharedPreferences.getString(Constants.KEY_USER, "") ?: "").toUser()
+    set(value) = sharedPreferences.edit {
+        putString(Constants.KEY_USER, value.toJson())
+    }
 }
