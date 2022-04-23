@@ -65,7 +65,13 @@ fun View.disable() = run { this.isEnabled = false }
 
 fun View.enable() = run { this.isEnabled = true }
 
-fun inflateChips(inflater: LayoutInflater, chipGroup: ChipGroup, items: List<String>, layout: Int, compress: Boolean = true) {
+fun inflateChips(
+    inflater: LayoutInflater,
+    chipGroup: ChipGroup,
+    items: List<String>,
+    layout: Int,
+    compress: Boolean = true
+) {
     for (item in items) {
         val chip = inflater.inflate(layout, chipGroup, false) as Chip
         chip.text = item
@@ -74,7 +80,7 @@ fun inflateChips(inflater: LayoutInflater, chipGroup: ChipGroup, items: List<Str
     }
 }
 
-fun Context.copyToClipboard(clipLabel: String, text: CharSequence){
+fun Context.copyToClipboard(clipLabel: String, text: CharSequence) {
     val clipboard = ContextCompat.getSystemService(this, ClipboardManager::class.java)
     clipboard?.setPrimaryClip(ClipData.newPlainText(clipLabel, text))
 }

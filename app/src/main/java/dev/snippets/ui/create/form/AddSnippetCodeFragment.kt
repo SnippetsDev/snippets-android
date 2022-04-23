@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.google.modernstorage.permissions.RequestAccess
 import com.google.modernstorage.permissions.StoragePermissions
@@ -37,19 +36,22 @@ class AddSnippetCodeFragment : Fragment() {
 
     private lateinit var fileSystem: AndroidFileSystem
 
-    private val requestFile = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
-        if (uri != null) {
-            model.code = fileSystem.source(uri.toOkioPath()).buffer().readUtf8().also {
-                log("Received code: $it")
-                binding.codeViewSnippetCode.apply {
-                    setOptions(Options.Default.get(requireContext()).withTheme(ColorTheme.MONOKAI))
-                    setCode(it)
+    private val requestFile =
+        registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+            if (uri != null) {
+                model.code = fileSystem.source(uri.toOkioPath()).buffer().readUtf8().also {
+                    log("Received code: $it")
+                    binding.codeViewSnippetCode.apply {
+                        setOptions(
+                            Options.Default.get(requireContext()).withTheme(ColorTheme.MONOKAI)
+                        )
+                        setCode(it)
+                    }
                 }
+            } else {
+                binding.root.errorSnackbar("Failed to open file")
             }
-        } else {
-            binding.root.errorSnackbar("Failed to open file")
         }
-    }
 
     private val requestStorageAccess = registerForActivityResult(RequestAccess()) { hasAccess ->
         if (!hasAccess) {
@@ -110,9 +112,13 @@ class AddSnippetCodeFragment : Fragment() {
                             binding.progressBar.hideWithAnimation()
                             binding.root.shortSnackbar("Snippet published!")
                             if (model.publishedFirstSnippet()) {
-                                binding.konfetti.start(Party(
-                                    emitter = Emitter(duration = 3, TimeUnit.SECONDS).perSecond(30)
-                                ))
+                                binding.konfetti.start(
+                                    Party(
+                                        emitter = Emitter(duration = 3, TimeUnit.SECONDS).perSecond(
+                                            30
+                                        )
+                                    )
+                                )
                             }
                             lifecycleScope.launch {
                                 delay(3000)

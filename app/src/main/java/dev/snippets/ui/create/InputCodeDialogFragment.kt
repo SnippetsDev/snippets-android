@@ -1,12 +1,9 @@
 package dev.snippets.ui.create
 
-import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.setFragmentResult
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dev.snippets.databinding.FragmentInputCodeDialogBinding
@@ -35,7 +32,10 @@ class InputCodeDialogFragment : BottomSheetDialogFragment() {
                 binding.textFieldInputCode.error = "Code cannot be empty"
             } else {
                 setFragmentResult(Constants.KEY_INPUT_CODE_DIALOG, Bundle().apply {
-                    putString(Constants.KEY_CODE, binding.textFieldInputCode.editText?.text.toString())
+                    putString(
+                        Constants.KEY_CODE,
+                        binding.textFieldInputCode.editText?.text.toString()
+                    )
                 })
                 dismiss()
             }

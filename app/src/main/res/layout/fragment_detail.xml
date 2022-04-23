@@ -66,6 +66,7 @@
 
         <Button
             android:id="@+id/button_copy_code"
+            style="@style/Widget.Material3.Button.OutlinedButton.Icon"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
@@ -73,29 +74,28 @@
             android:layout_marginEnd="32dp"
             android:text="Copy Code"
             app:icon="@drawable/ic_baseline_content_copy_24"
-            style="@style/Widget.Material3.Button.OutlinedButton.Icon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textView_snippet_description" />
 
         <io.github.kbiakov.codeview.CodeView
+            android:id="@+id/codeView_snippet_code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/codeView_snippet_code"
-            app:layout_constraintTop_toBottomOf="@id/button_copy_code"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_copy_code" />
 
         <ProgressBar
             android:id="@+id/progress_bar"
-            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
