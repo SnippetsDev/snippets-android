@@ -3,6 +3,7 @@ package dev.snippets.util
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,17 +12,14 @@ import androidx.core.content.ContextCompat
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.snackbar.Snackbar
-import com.squareup.moshi.Moshi
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.snippets.BuildConfig
-import dev.snippets.R
 import java.text.SimpleDateFormat
 import java.util.*
 
-fun log(vararg messages: String) {
+fun log(vararg messages: String?) {
     if (BuildConfig.DEBUG) {
         for (message in messages) {
-            Log.d("SnippetsDebug", message)
+            if (message != null) Log.d("SnippetsDebug", message)
         }
     }
 }
@@ -86,3 +84,9 @@ fun List<String>.toStringWithCommas(): String = this.joinToString(",")
 
 // Converts comma separated String to a list of Strings
 fun String.toListOfStrings(): List<String> = this.split(",")
+
+fun Context.clearBackStackAndLaunchActivity(activity: Class<*>) {
+    val intent = Intent(this, activity)
+    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+    startActivity(intent)
+}
