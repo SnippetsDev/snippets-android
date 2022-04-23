@@ -18,6 +18,13 @@ android {
         versionName "0.1.5"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        Properties properties = new Properties()
+        if (rootProject.file("local.properties").exists()) {
+            properties.load(rootProject.file("local.properties").newDataInputStream())
+        }
+
+        buildConfigField "String", "GITHUB_CLIENT_ID", properties.getProperty("GITHUB_CLIENT_ID", "")
     }
 
     buildTypes {

@@ -5,6 +5,8 @@
       <map>
         <entry key="../../../Android/Sdk/platforms/android-31/data/res/layout/simple_dropdown_item_1line.xml" value="0.35052083333333334" />
         <entry key="app/src/main/res/drawable/ic_baseline_lightbulb_24.xml" value="0.352" />
+        <entry key="app/src/main/res/drawable/ic_login_with_github.xml" value="0.352" />
+        <entry key="app/src/main/res/layout/activity_auth.xml" value="0.35052083333333334" />
         <entry key="app/src/main/res/layout/activity_launch.xml" value="0.35052083333333334" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.35052083333333334" />
         <entry key="app/src/main/res/layout/activity_onboarding.xml" value="0.35052083333333334" />
