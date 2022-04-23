@@ -1,18 +1,13 @@
 package dev.snippets.ui.create
 
 import android.net.Uri
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
-import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.snippets.data.Repository
 import dev.snippets.data.SharedPrefHelper
-import dev.snippets.data.Snippet
+import dev.snippets.data.models.Snippet
 import dev.snippets.util.State
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -52,15 +47,17 @@ class CreateViewModel @Inject constructor(
 
     fun canMoveToAddImage() = title.isNotEmpty() && tags.isNotEmpty() && language.isNotEmpty()
 
-    fun publishSnippet() = repo.publishSnippet(Snippet(
-        "",
-        title,
-        language,
-        description,
-        tags,
-        imageUri.toString(),
-        code
-    ))
+    fun publishSnippet() = repo.publishSnippet(
+        Snippet(
+            "",
+            title,
+            language,
+            description,
+            tags,
+            imageUri.toString(),
+            code
+        )
+    )
 
     fun uploadImageToFirebase() = if (imageUri != null)
         repo.uploadImageToFirebase(imageUri!!) else throw IllegalStateException("Image Uri is null")

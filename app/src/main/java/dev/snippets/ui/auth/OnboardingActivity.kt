@@ -1,9 +1,9 @@
 package dev.snippets.ui.auth
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.chip.Chip
@@ -56,16 +56,26 @@ class OnboardingActivity : AppCompatActivity() {
             binding.textViewOnboardingIntro.animateText("Welcome to Snippets!")
             delay(3000)
 
-            binding.textViewOnboardingIntro.animateText("Snippets allows you to share and discover exciting pieces of code " +
-                    "that are relevant to YOU.")
+            binding.textViewOnboardingIntro.animateText(
+                "Snippets allows you to share and discover exciting pieces of code " +
+                        "that are relevant to YOU."
+            )
             delay(6000)
 
-            binding.textViewOnboardingIntro.animateText("To get started, select upto 3 tags from the choices below. You'll start seeing Snippets " +
-                    "that other developers have shared containing these tags.")
+            binding.textViewOnboardingIntro.animateText(
+                "To get started, select upto 3 tags from the choices below. You'll start seeing Snippets " +
+                        "that other developers have shared containing these tags."
+            )
 
             delay(2500)
 
-            inflateChips(layoutInflater, binding.chipGroupTags, model.listTags, R.layout.layout_filter_chip, false)
+            inflateChips(
+                layoutInflater,
+                binding.chipGroupTags,
+                model.listTags,
+                R.layout.layout_filter_chip,
+                false
+            )
             binding.chipGroupTags.showWithAnimation()
             binding.buttonDone.showWithAnimation()
         }
@@ -89,7 +99,9 @@ class OnboardingActivity : AppCompatActivity() {
             model.setPreferredTags()
             startActivity(Intent(
                 this, MainActivity::class.java
-            ).also { it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK })
+            ).also {
+                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            })
         }
     }
 }

@@ -37,7 +37,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/imageView2"
-            app:layout_constraintTop_toBottomOf="@id/chipGroup_scrollview" />
+            app:layout_constraintTop_toBottomOf="@id/list_tags" />
 
         <TextView
             android:id="@+id/textView_user_email"
@@ -70,45 +70,15 @@
             app:layout_constraintStart_toEndOf="@+id/imageView4"
             app:layout_constraintTop_toBottomOf="@id/textView_user_email" />
 
-        <HorizontalScrollView
-            android:id="@+id/chipGroup_scrollview"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list_tags"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:scrollbars="none"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageView_user_image">
-
-
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/chipGroup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:singleLine="true">
-
-                <com.google.android.material.chip.Chip
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Python" />
-
-                <com.google.android.material.chip.Chip
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Systems Programming" />
-
-                <com.google.android.material.chip.Chip
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Interpreter Design" />
-
-                <com.google.android.material.chip.Chip
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Rust" />
-
-            </com.google.android.material.chip.ChipGroup>
-        </HorizontalScrollView>
+            app:layout_constraintTop_toBottomOf="@id/imageView_user_image" />
 
         <ImageView
             android:id="@+id/imageView2"

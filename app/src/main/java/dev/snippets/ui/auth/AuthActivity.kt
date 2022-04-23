@@ -1,9 +1,9 @@
 package dev.snippets.ui.auth
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import dagger.hilt.android.AndroidEntryPoint
 import dev.snippets.BuildConfig
@@ -23,10 +23,14 @@ class AuthActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.cardViewLoginWithGithub.setOnClickListener {
-            startActivity(Intent(Intent.ACTION_VIEW, "https://github.com/login/oauth/authorize?client_id=${BuildConfig.GITHUB_CLIENT_ID}".toUri()).apply {
-                addCategory(Intent.CATEGORY_BROWSABLE)
-                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            })
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    "https://github.com/login/oauth/authorize?client_id=${BuildConfig.GITHUB_CLIENT_ID}".toUri()
+                ).apply {
+                    addCategory(Intent.CATEGORY_BROWSABLE)
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                })
         }
     }
 
@@ -48,7 +52,16 @@ class AuthActivity : AppCompatActivity() {
                         binding.lottieLogin.showWithAnimation()
                     }
                     is State.Success -> {
-                        startActivity(Intent(this, OnboardingActivity::class.java))
+                        if (viewModel.isNewUser()) startActivity(
+                            Intent(
+                                this,
+                                OnboardingActivity::class.java
+                            )
+                        )
+                        else clearBackStackAndLaunchActivity(MainActivity::class.java)
+                        binding.lottieLoading.hide()
+                        binding.cardViewLoginWithGithub.showWithAnimation()
+                        binding.lottieLogin.showWithAnimation()
                     }
                 }
             }

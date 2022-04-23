@@ -30,19 +30,20 @@ class AddSnippetImageFragment : Fragment() {
         return binding.root
     }
 
-    private val startForImageResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        val resultCode = result.resultCode
-        val data = result.data
+    private val startForImageResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            val resultCode = result.resultCode
+            val data = result.data
 
-        if (resultCode == Activity.RESULT_OK) {
-            model.imageUri = data?.data!!.also {
-                log("Received uri: $it")
+            if (resultCode == Activity.RESULT_OK) {
+                model.imageUri = data?.data!!.also {
+                    log("Received uri: $it")
+                }
+                trackImageUpload()
+            } else if (resultCode == ImagePicker.RESULT_ERROR) {
+                binding.root.errorSnackbar(ImagePicker.getError(data))
             }
-            trackImageUpload()
-        } else if (resultCode == ImagePicker.RESULT_ERROR) {
-            binding.root.errorSnackbar(ImagePicker.getError(data))
         }
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -72,7 +73,7 @@ class AddSnippetImageFragment : Fragment() {
 
     private fun trackImageUpload() {
         model.uploadImageToFirebase().observe(viewLifecycleOwner) {
-            when(it) {
+            when (it) {
                 is State.Loading -> {
                     binding.progressBar.show()
                     binding.buttonNext.disable()

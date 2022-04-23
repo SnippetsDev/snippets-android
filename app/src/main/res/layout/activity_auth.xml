@@ -7,40 +7,40 @@
     tools:context=".ui.auth.AuthActivity">
 
     <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottie_loading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/lottie_loading"
-        app:lottie_rawRes="@raw/loading"
-        app:lottie_loop="true"
+        android:visibility="gone"
         app:lottie_autoPlay="true"
-        android:visibility="gone"/>
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/loading" />
 
     <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottie_login"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:id="@+id/lottie_login"
+        android:layout_margin="32dp"
+        app:layout_constraintBottom_toTopOf="@id/cardView_login_with_github"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/cardView_login_with_github"
-        android:layout_margin="32dp"
         app:lottie_rawRes="@raw/login" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardView_login_with_github"
+        style="@style/Widget.Material3.CardView.Filled"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_margin="32dp"
-        app:cardCornerRadius="16dp"
-        style="@style/Widget.Material3.CardView.Filled"
         android:clickable="true"
         android:focusable="true"
-        app:cardBackgroundColor="#121212">
+        app:cardBackgroundColor="#121212"
+        app:cardCornerRadius="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

@@ -46,13 +46,13 @@
 
     <Button
         android:id="@+id/button_cancel"
+        style="@style/Widget.Material3.Button.TonalButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:text="Cancel"
         app:icon="@drawable/outline_cancel_24"
-        style="@style/Widget.Material3.Button.TonalButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_done"
         app:layout_constraintHorizontal_bias="0.5"

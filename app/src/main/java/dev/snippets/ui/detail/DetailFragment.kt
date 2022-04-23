@@ -10,10 +10,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.load
 import coil.transform.RoundedCornersTransformation
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import dev.snippets.R
-import dev.snippets.data.Snippet
+import dev.snippets.data.models.Snippet
 import dev.snippets.databinding.FragmentDetailBinding
 import dev.snippets.util.*
 import io.github.kbiakov.codeview.adapters.Options
@@ -39,7 +38,9 @@ class DetailFragment : Fragment() {
         val args by navArgs<DetailFragmentArgs>()
         model.getSnippet(args.snippetId).observe(viewLifecycleOwner) {
             when (it) {
-                is State.Loading -> { binding.progressBar.show() }
+                is State.Loading -> {
+                    binding.progressBar.show()
+                }
                 is State.Error -> {
                     binding.progressBar.hide()
                     binding.root.errorSnackbar(it.message)
@@ -54,13 +55,18 @@ class DetailFragment : Fragment() {
     }
 
     private fun setupSnippet(snippet: Snippet) {
-        with (binding) {
+        with(binding) {
             textViewSnippetTitle.text = snippet.title
             textViewSnippetDescription.text = snippet.description
             imageViewSnippetOutputImage.load(snippet.imageUrl) {
                 transformations(RoundedCornersTransformation(16f))
             }
-            inflateChips(layoutInflater, chipGroupSnippetTags, snippet.tags, R.layout.layout_chip_tag)
+            inflateChips(
+                layoutInflater,
+                chipGroupSnippetTags,
+                snippet.tags,
+                R.layout.layout_chip_tag
+            )
             codeViewSnippetCode.apply {
                 setOptions(Options.Default.get(requireContext()).withTheme(ColorTheme.MONOKAI))
                 setCode(snippet.code ?: "An error occurred while loading the code!")

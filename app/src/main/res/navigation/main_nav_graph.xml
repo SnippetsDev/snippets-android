@@ -9,7 +9,7 @@
         android:id="@+id/homeFragment"
         android:name="dev.snippets.ui.home.HomeFragment"
         android:label="Home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_detailFragment"
             app:destination="@id/detailFragment"
@@ -30,7 +30,7 @@
         android:id="@+id/detailFragment"
         android:name="dev.snippets.ui.detail.DetailFragment"
         android:label="Detail"
-        tools:layout="@layout/fragment_detail" >
+        tools:layout="@layout/fragment_detail">
         <argument
             android:name="snippetId"
             app:argType="string" />

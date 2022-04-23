@@ -41,29 +41,29 @@ class AddSnippetDetailsFragment : Fragment() {
         binding.buttonRetry.setOnClickListener { getTags() }
     }
 
-   private fun getTags() {
-       model.getTags().observe(viewLifecycleOwner) {
-           when (it) {
-               is State.Loading -> {
-                   binding.layoutNormal.hide()
-                   binding.layoutError.hide()
-                   binding.progressBar.showWithAnimation()
-               }
-               is State.Error -> {
-                   binding.progressBar.hide()
-                   binding.layoutNormal.hide()
-                   binding.layoutError.showWithAnimation()
-                   binding.root.errorSnackbar(it.message)
-               }
-               is State.Success -> {
-                   binding.progressBar.hide()
-                   binding.layoutError.hide()
-                   loadView()
-                   binding.layoutNormal.showWithAnimation()
-               }
-           }
-       }
-   }
+    private fun getTags() {
+        model.getTags().observe(viewLifecycleOwner) {
+            when (it) {
+                is State.Loading -> {
+                    binding.layoutNormal.hide()
+                    binding.layoutError.hide()
+                    binding.progressBar.showWithAnimation()
+                }
+                is State.Error -> {
+                    binding.progressBar.hide()
+                    binding.layoutNormal.hide()
+                    binding.layoutError.showWithAnimation()
+                    binding.root.errorSnackbar(it.message)
+                }
+                is State.Success -> {
+                    binding.progressBar.hide()
+                    binding.layoutError.hide()
+                    loadView()
+                    binding.layoutNormal.showWithAnimation()
+                }
+            }
+        }
+    }
 
     private fun loadView() {
         (binding.textFieldLanguage.editText as? AutoCompleteTextView)?.setAdapter(
@@ -83,7 +83,12 @@ class AddSnippetDetailsFragment : Fragment() {
             model.title = text.toString()
         }
 
-        inflateChips(layoutInflater, binding.chipGroupTags, model.listTags, R.layout.layout_filter_chip)
+        inflateChips(
+            layoutInflater,
+            binding.chipGroupTags,
+            model.listTags,
+            R.layout.layout_filter_chip
+        )
 
         binding.textFieldSnippetDescription.editText?.doOnTextChanged { text, _, _, _ ->
             if (text.isNullOrEmpty()) {

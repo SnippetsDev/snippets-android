@@ -1,4 +1,4 @@
-package dev.snippets.data
+package dev.snippets.data.models
 
 import com.squareup.moshi.Json
 

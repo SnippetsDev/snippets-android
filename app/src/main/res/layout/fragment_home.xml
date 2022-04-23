@@ -10,13 +10,13 @@
         android:id="@+id/layout_swipe_refresh"
         android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="4dp">
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.skydoves.androidveil.VeilRecyclerFrameView
             android:id="@+id/list_snippets"
@@ -28,12 +28,12 @@
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottie"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        android:id="@+id/lottie"
-        android:visibility="gone"/>
+        app:lottie_loop="true" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
