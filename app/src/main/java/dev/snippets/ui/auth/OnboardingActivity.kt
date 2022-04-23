@@ -63,7 +63,7 @@ class OnboardingActivity : AppCompatActivity() {
             delay(6000)
 
             binding.textViewOnboardingIntro.animateText(
-                "To get started, select upto 3 tags from the choices below. You'll start seeing Snippets " +
+                "To get started, select at least 3 tags from the choices below. You'll start seeing Snippets " +
                         "that other developers have shared containing these tags."
             )
 
@@ -89,11 +89,8 @@ class OnboardingActivity : AppCompatActivity() {
                     }
                 }
             }
-            if (model.listTags.size > 3) {
-                binding.root.shortSnackbar("Please select a maximum of 3 tags")
-                return@setOnClickListener
-            } else if (model.listTags.isEmpty()) {
-                binding.root.shortSnackbar("Please select at least one tag!")
+            if (model.listTags.size < 3) {
+                binding.root.shortSnackbar("Please select a minimum of 3 tags")
                 return@setOnClickListener
             }
             model.setPreferredTags()
