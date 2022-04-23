@@ -7,6 +7,7 @@ import dev.snippets.data.Repository
 import dev.snippets.data.SharedPrefHelper
 import dev.snippets.data.models.User
 import dev.snippets.util.State
+import dev.snippets.util.log
 import kotlinx.coroutines.delay
 import javax.inject.Inject
 
@@ -28,9 +29,12 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    fun setPreferredTags() = sharedPref.saveUserPreferredTags(listTags)
+    fun setPreferredTags() {
+        sharedPref.user = sharedPref.user.copy(tags = listTags)
+    }
 
     fun loginWithGithub(token: String) = liveData {
+        log("Received temp code from GitHub: $token")
         emit(State.Loading)
         delay(1000)
         sharedPref.user = User(
@@ -42,7 +46,7 @@ class AuthViewModel @Inject constructor(
                     "        Holds a Master\\'s degree in Computer Science and Mathematics.\n" +
                     "        Previously Senior Staff Engineer @ Google, Principal Engineer @ Dropbox.\n" +
                     "        Currently Distinguished Engineer @ Microsoft.",
-            listOf("Android", "Python", "Kotlin")
+            emptyList()
         )
         emit(State.Success(true))
     }

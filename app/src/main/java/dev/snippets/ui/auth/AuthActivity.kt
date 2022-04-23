@@ -59,6 +59,9 @@ class AuthActivity : AppCompatActivity() {
                             )
                         )
                         else clearBackStackAndLaunchActivity(MainActivity::class.java)
+                        binding.lottieLoading.hide()
+                        binding.cardViewLoginWithGithub.showWithAnimation()
+                        binding.lottieLogin.showWithAnimation()
                     }
                 }
             }

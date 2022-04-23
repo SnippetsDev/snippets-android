@@ -21,7 +21,7 @@ class HomeViewModel @Inject constructor(
 
     fun getSnippetsWithPreferredTags() = liveData {
         emit(State.Loading)
-        emit(repo.getSnippetsWithPreferredTags(sharedPref.getUserPreferredTags()))
+        emit(repo.getSnippetsWithPreferredTags(sharedPref.user.tags.joinToString(",")))
     }
 
     fun isNewUser() = sharedPref.user.tags.isEmpty()
