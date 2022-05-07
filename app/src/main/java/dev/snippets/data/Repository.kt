@@ -65,7 +65,7 @@ class Repository(
             try {
                 val response = apiCall()
                 when {
-                    response.code() != 200 -> {
+                    response.code() in 200..204 -> {
                         State.Error("Received error code ${response.code()}, ${response.message()}")
                     }
                     else -> {

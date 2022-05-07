@@ -55,7 +55,8 @@ class CreateViewModel @Inject constructor(
             description,
             tags,
             imageUri.toString(),
-            code
+            code,
+            0
         )
     )
 

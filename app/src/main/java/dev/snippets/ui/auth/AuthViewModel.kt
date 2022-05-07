@@ -38,11 +38,12 @@ class AuthViewModel @Inject constructor(
         emit(State.Loading)
         delay(1000)
         sharedPref.user = User(
-            "0",
-            "Linus Torvalds",
-            "torvalds@linux-foundation.org",
+            0,
             "https://i.pcmag.com/imagery/articles/040JHoVNgc1gh2e7sunj82k-1.fit_lim.size_1600x900.v1569492349.png",
             "Creator and Maintainer of Linux and Git, basically the reason for most developers' jobs",
+            "torvalds",
+            "torvalds@linux-foundation.org",
+            "Linus Torvalds",
             emptyList()
         )
         emit(State.Success(true))
