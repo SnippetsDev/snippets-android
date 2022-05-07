@@ -13,5 +13,6 @@ data class Snippet(
     val description: String,
     val tags: List<String>,
     @Json(name = "img_url") val imageUrl: String?,
-    val code: String?
+    val code: String?,
+    val userId: Long
 )
