@@ -33,12 +33,18 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(): Retrofit {
+    fun provideRetrofit(sharedPref: SharedPrefHelper): Retrofit {
         val moshi = Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
         return Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .client(provideOkHttpLoggingInterceptor())
+            .client(OkHttpClient.Builder().addInterceptor { chain ->
+                val request =
+                    chain.request().newBuilder().addHeader("Authorization", "Bearer ${sharedPref.accessToken}")
+                        .build()
+                chain.proceed(request)
+            }.build())
             .build()
     }
 

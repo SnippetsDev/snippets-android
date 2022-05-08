@@ -65,7 +65,7 @@ class HomeFragment : Fragment() {
                 }
                 is State.Success -> {
                     binding.layoutSwipeRefresh.isRefreshing = false
-                    if (it.data.snippets.isEmpty()) {
+                    if (it.data.isEmpty()) {
                         binding.listSnippets.hideWithAnimation()
                         binding.lottie.setAnimation(R.raw.empty)
                         binding.lottie.showWithAnimation()
@@ -73,7 +73,7 @@ class HomeFragment : Fragment() {
                         binding.lottie.hide()
                         binding.listSnippets.unVeil()
                         binding.listSnippets.getRecyclerView().apply {
-                            adapter = SnippetsListAdapter(requireContext(), it.data.snippets)
+                            adapter = SnippetsListAdapter(requireContext(), it.data)
                         }
                         binding.listSnippets.showWithAnimation()
                     }

@@ -27,4 +27,10 @@ class SharedPrefHelper(context: Context) {
         set(value) = sharedPreferences.edit {
             putString(Constants.KEY_USER, value.toJson())
         }
+
+    var accessToken: String
+        get() = (sharedPreferences.getString(Constants.KEY_ACCESS_TOKEN, "") ?: "")
+        set(value) = sharedPreferences.edit {
+            putString(Constants.KEY_ACCESS_TOKEN, value)
+        }
 }

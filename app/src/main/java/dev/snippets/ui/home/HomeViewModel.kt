@@ -14,11 +14,6 @@ class HomeViewModel @Inject constructor(
     private val sharedPref: SharedPrefHelper
 ) : ViewModel() {
 
-    fun getAllSnippets() = liveData {
-        emit(State.Loading)
-        emit(repo.getAllSnippets())
-    }
-
     fun getSnippetsWithPreferredTags() = liveData {
         emit(State.Loading)
         emit(repo.getSnippetsWithPreferredTags(sharedPref.user.tags.joinToString(",")))

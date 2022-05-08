@@ -1,15 +1,17 @@
 package dev.snippets.data.models
 
+import com.squareup.moshi.Json
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import java.io.EOFException
 
 data class User(
-    val id: String,
-    val name: String,
-    val email: String,
-    val imageUrl: String,
+    val id: Long,
+    @Json(name = "avatar_url") val imageUrl: String,
     val bio: String,
+    @Json(name = "login") val username: String,
+    val email: String?,
+    val name: String,
     val tags: List<String>
 )
 
@@ -27,8 +29,8 @@ fun String.toUser(): User {
         .build()
     val jsonAdapter = moshi.adapter(User::class.java)
     return try {
-        jsonAdapter.fromJson(this) ?: User("", "", "", "", "", emptyList())
+        jsonAdapter.fromJson(this) ?: User(0, "", "", "", "", "", emptyList())
     } catch (e: EOFException) { // In case of empty json, meaning no user is currently saved
-        User("", "", "", "", "", emptyList())
+        User(0, "", "", "", "", "", emptyList())
     }
 }
