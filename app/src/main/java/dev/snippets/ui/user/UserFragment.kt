@@ -37,6 +37,7 @@ class UserFragment : Fragment() {
 
         with (binding) {
             val user = sharedPref.user
+            textViewUserLoginName.text = "@${user.username}"
             textViewUserName.text = user.name
             textViewUserEmail.text = user.email
             textViewUserBio.text = user.bio
