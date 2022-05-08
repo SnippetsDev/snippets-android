@@ -56,7 +56,7 @@ class CreateViewModel @Inject constructor(
             tags,
             imageUri.toString(),
             code,
-            0
+            sharedPref.user.id
         )
     )
 
