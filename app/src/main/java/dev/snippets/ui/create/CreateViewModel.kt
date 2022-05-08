@@ -29,7 +29,7 @@ class CreateViewModel @Inject constructor(
         emit(State.Loading)
         val response = repo.getAllTags()
         if (response is State.Success) {
-            listTags = response.data.tags
+            listTags = response.data.toMutableList()
             emit(State.Success(response.data))
         } else if (response is State.Error) {
             emit(State.Error(response.message))

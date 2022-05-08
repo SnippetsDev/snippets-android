@@ -21,11 +21,10 @@ class Repository(
     suspend fun getSnippetsWithPreferredTags(tags: String) =
         dataOrError { api.getSnippetsForTags(tags) }
 
-    suspend fun getAllSnippets() = dataOrError { api.getAllSnippets() }
-
     suspend fun getAllTags() = dataOrError { api.getAllTags() }
 
-    suspend fun getSnippet(id: String) = dataOrError { api.getSnippet(id) }
+    suspend fun getSnippet(id: String) = dataOrError { api.
+    getSnippet(id) }
 
     fun uploadImageToFirebase(imageUri: Uri) = liveData {
         emit(State.Loading)
@@ -54,8 +53,13 @@ class Repository(
         emit(state)
     }
 
+    suspend fun authenticateUser(accessCode: String) = dataOrError { api.authenticateUser(
+        AuthRequestBody(accessCode)
+    ) }
 
-    /**
+    suspend fun setPreferredTags(userId: Long, tags: List<String>) = dataOrError { api.setPreferredTags(SetPreferredTagsRequestBody(userId, tags)) }
+
+            /**
      * This is a really common pattern where the API call result needs to be checked for errors.
      * This method simplifies the error handling and returns the data if successful, error message otherwise.
      * Note that this method returns the data or error wrapped in a State object. It does not emit a loading state.
@@ -65,7 +69,7 @@ class Repository(
             try {
                 val response = apiCall()
                 when {
-                    response.code() in 200..204 -> {
+                    response.code() !in 200..204 -> {
                         State.Error("Received error code ${response.code()}, ${response.message()}")
                     }
                     else -> {

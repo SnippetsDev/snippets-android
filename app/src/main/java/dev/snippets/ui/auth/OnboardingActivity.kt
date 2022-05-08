@@ -25,6 +25,11 @@ class OnboardingActivity : AppCompatActivity() {
         binding = ActivityOnboardingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        getTags()
+        binding.buttonRetry.setOnClickListener { getTags() }
+    }
+
+    private fun getTags() {
         model.getAllTags().observe(this) {
             when (it) {
                 is State.Loading -> {
@@ -93,12 +98,25 @@ class OnboardingActivity : AppCompatActivity() {
                 binding.root.shortSnackbar("Please select a minimum of 3 tags")
                 return@setOnClickListener
             }
-            model.setPreferredTags()
-            startActivity(Intent(
-                this, MainActivity::class.java
-            ).also {
-                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            })
+            model.setPreferredTags().observe(this) {
+                when (it) {
+                    is State.Loading -> {
+                        binding.progressBar.show()
+                    }
+                    is State.Error -> {
+                        binding.progressBar.hide()
+                        binding.root.errorSnackbar(it.message)
+                    }
+                    is State.Success -> {
+                        binding.progressBar.hide()
+                        startActivity(Intent(
+                            this, MainActivity::class.java
+                        ).also {
+                            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        })
+                    }
+                }
+            }
         }
     }
 }

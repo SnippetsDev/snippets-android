@@ -46,7 +46,7 @@ class AuthActivity : AppCompatActivity() {
                         binding.lottieLoading.showWithAnimation()
                     }
                     is State.Error -> {
-                        binding.root.shortSnackbar("Login failed due to ${it.message}")
+                        binding.root.shortSnackbar(it.message)
                         binding.lottieLoading.hide()
                         binding.cardViewLoginWithGithub.showWithAnimation()
                         binding.lottieLogin.showWithAnimation()

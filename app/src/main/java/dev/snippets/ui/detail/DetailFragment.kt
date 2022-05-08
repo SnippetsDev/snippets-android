@@ -48,7 +48,7 @@ class DetailFragment : Fragment() {
                 }
                 is State.Success -> {
                     binding.progressBar.hide()
-                    setupSnippet(it.data.snippets[0])
+                    setupSnippet(it.data[0])
                 }
             }
         }
