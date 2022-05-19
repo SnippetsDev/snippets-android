@@ -36,6 +36,7 @@ android {
             buildConfigField("String", "BASE_URL", "\"https://snippetsworld.el.r.appspot.com/\"")
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
         }
     }
     compileOptions {
