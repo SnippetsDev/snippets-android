@@ -78,6 +78,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textView_snippet_description" />
 
+        <Button
+            android:id="@+id/button_share_snippet"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginTop="16dp"
+            android:text="Share Snippet"
+            app:icon="@drawable/ic_baseline_share_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_copy_code" />
+
         <io.github.kbiakov.codeview.CodeView
             android:id="@+id/codeView_snippet_code"
             android:layout_width="match_parent"
@@ -85,7 +97,7 @@
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_copy_code" />
+            app:layout_constraintTop_toBottomOf="@id/button_share_snippet" />
 
         <ProgressBar
             android:id="@+id/progress_bar"

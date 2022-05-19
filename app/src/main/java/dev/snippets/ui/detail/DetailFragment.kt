@@ -1,5 +1,6 @@
 package dev.snippets.ui.detail
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -74,6 +75,14 @@ class DetailFragment : Fragment() {
             buttonCopyCode.setOnClickListener {
                 requireContext().copyToClipboard("Snippet Code", snippet.code ?: "")
                 binding.root.shortSnackbar("Code copied to clipboard!")
+            }
+            buttonShareSnippet.setOnClickListener {
+                val shareIntent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TEXT, "Hey! Check out this awesome code snippet: https://snippetsdev.netlify.app/snippet/${snippet.id}")
+                    type = "text/plain"
+                }
+                startActivity(Intent.createChooser(shareIntent, "Share Snippet"))
             }
         }
     }
