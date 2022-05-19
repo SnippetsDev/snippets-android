@@ -32,7 +32,7 @@ class SnippetsListAdapter(private val context: Context, private val snippets: Li
                 }
                 root.setOnClickListener {
                     val action =
-                        HomeFragmentDirections.actionHomeFragmentToDetailFragment(snippet.id)
+                        HomeFragmentDirections.actionHomeFragmentToDetailBottomSheetFragment(snippet.id)
                     it.findNavController().navigate(action)
                 }
             }

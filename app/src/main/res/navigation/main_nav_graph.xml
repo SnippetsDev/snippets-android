@@ -11,10 +11,8 @@
         android:label="Home"
         tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/action_homeFragment_to_detailFragment"
-            app:destination="@id/detailFragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out" />
+            android:id="@+id/action_homeFragment_to_detailBottomSheetFragment"
+            app:destination="@id/detailBottomSheetFragment" />
     </fragment>
     <fragment
         android:id="@+id/userFragment"
@@ -26,13 +24,13 @@
         android:name="dev.snippets.ui.create.CreateFragment"
         android:label="Create"
         tools:layout="@layout/fragment_create" />
-    <fragment
-        android:id="@+id/detailFragment"
-        android:name="dev.snippets.ui.detail.DetailFragment"
-        android:label="Detail"
-        tools:layout="@layout/fragment_detail">
+    <dialog
+        android:id="@+id/detailBottomSheetFragment"
+        android:name="dev.snippets.ui.detail.DetailBottomSheetFragment"
+        android:label="fragment_detail_bottom_sheet"
+        tools:layout="@layout/fragment_detail_bottom_sheet" >
         <argument
             android:name="snippetId"
             app:argType="string" />
-    </fragment>
+    </dialog>
 </navigation>
