@@ -73,6 +73,7 @@ class DetailFragment : Fragment() {
             }
             buttonCopyCode.setOnClickListener {
                 requireContext().copyToClipboard("Snippet Code", snippet.code ?: "")
+                binding.root.shortSnackbar("Code copied to clipboard!")
             }
         }
     }
