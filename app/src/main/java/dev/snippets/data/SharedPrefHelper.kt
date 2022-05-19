@@ -33,4 +33,10 @@ class SharedPrefHelper(context: Context) {
         set(value) = sharedPreferences.edit {
             putString(Constants.KEY_ACCESS_TOKEN, value)
         }
+
+    fun nukePreferenceData() {
+        sharedPreferences.edit {
+            clear()
+        }
+    }
 }
