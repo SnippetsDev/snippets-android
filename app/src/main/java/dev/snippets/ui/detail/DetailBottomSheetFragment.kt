@@ -1,27 +1,32 @@
 package dev.snippets.ui.detail
 
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import coil.load
 import coil.transform.RoundedCornersTransformation
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import dev.snippets.R
 import dev.snippets.data.models.Snippet
-import dev.snippets.databinding.FragmentDetailBinding
+import dev.snippets.databinding.FragmentDetailBottomSheetBinding
 import dev.snippets.util.*
 import io.github.kbiakov.codeview.adapters.Options
 import io.github.kbiakov.codeview.highlight.ColorTheme
 
 @AndroidEntryPoint
-class DetailFragment : Fragment() {
-    private lateinit var binding: FragmentDetailBinding
+class DetailBottomSheetFragment : BottomSheetDialogFragment() {
+    private lateinit var binding: FragmentDetailBottomSheetBinding
     private val model by viewModels<DetailViewModel>()
 
     override fun onCreateView(
@@ -29,14 +34,22 @@ class DetailFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentDetailBinding.inflate(inflater, container, false)
+        binding = FragmentDetailBottomSheetBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        return (super.onCreateDialog(savedInstanceState) as BottomSheetDialog).apply {
+            setOnShowListener {
+                behavior.state = BottomSheetBehavior.STATE_EXPANDED
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val args by navArgs<DetailFragmentArgs>()
+        val args by navArgs<DetailBottomSheetFragmentArgs>()
         model.getSnippet(args.snippetId).observe(viewLifecycleOwner) {
             when (it) {
                 is State.Loading -> {
@@ -59,9 +72,17 @@ class DetailFragment : Fragment() {
         with(binding) {
             textViewSnippetTitle.text = snippet.title
             textViewSnippetDescription.text = snippet.description
-            imageViewSnippetOutputImage.load(snippet.imageUrl) {
-                transformations(RoundedCornersTransformation(16f))
-            }
+            snippet.imageUrl?.let {
+                imageViewSnippetOutputImage.load(snippet.imageUrl) {
+                    crossfade(true)
+                    placeholder(CircularProgressDrawable(requireContext()).apply {
+                        strokeWidth = 5f
+                        centerRadius = 30f
+                        start()
+                    })
+                    transformations(RoundedCornersTransformation(16f))
+                }
+            } ?: imageViewSnippetOutputImage.hide()
             inflateChips(
                 layoutInflater,
                 chipGroupSnippetTags,

@@ -18,7 +18,6 @@
             android:name=".ui.auth.AuthActivity"
             android:exported="true"
             android:launchMode="singleTask">
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -52,8 +51,8 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="https"
-                    android:host="snippetsdev.netfliy.app" />
+                    android:host="snippetsdev.netfliy.app"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
     </application>
