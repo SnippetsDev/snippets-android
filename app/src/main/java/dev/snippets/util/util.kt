@@ -12,6 +12,9 @@ import androidx.core.content.ContextCompat
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.snackbar.Snackbar
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dev.snippets.BuildConfig
 import java.text.SimpleDateFormat
 import java.util.*
@@ -95,4 +98,11 @@ fun Context.clearBackStackAndLaunchActivity(activity: Class<*>) {
     val intent = Intent(this, activity)
     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
     startActivity(intent)
+}
+
+fun <T : Any?> getMoshiAdapter(type: Class<T> ): JsonAdapter<T>? {
+    val moshi = Moshi.Builder()
+        .add(KotlinJsonAdapterFactory())
+        .build()
+    return moshi.adapter(type)
 }
