@@ -1,4 +1,4 @@
-package dev.snippets.data
+package dev.snippets.data.local
 
 import android.content.Context
 import androidx.core.content.edit

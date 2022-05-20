@@ -1,6 +1,7 @@
 package dev.snippets.di
 
 import android.content.Context
+import androidx.room.Room
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -9,9 +10,11 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.snippets.BuildConfig
-import dev.snippets.data.Api
+import dev.snippets.data.network.Api
 import dev.snippets.data.Repository
-import dev.snippets.data.SharedPrefHelper
+import dev.snippets.data.local.SharedPrefHelper
+import dev.snippets.data.local.SnippetsDao
+import dev.snippets.data.local.SnippetsDatabase
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -54,9 +57,21 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideRepository(api: Api) = Repository(api)
+    fun provideRepository(api: Api, dao: SnippetsDao) = Repository(api, dao)
 
     @Singleton
     @Provides
     fun provideSharedPref(@ApplicationContext context: Context) = SharedPrefHelper(context)
+
+    @Singleton
+    @Provides
+    fun provideDatabase(@ApplicationContext context: Context) = Room.databaseBuilder(
+        context,
+        SnippetsDatabase::class.java,
+        "snippets-db"
+    ).build()
+
+    @Singleton
+    @Provides
+    fun provideDao(database: SnippetsDatabase) = database.snippetsDao()
 }

@@ -1,4 +1,4 @@
-package dev.snippets.data
+package dev.snippets.data.network
 
 import dev.snippets.data.models.Snippet
 import retrofit2.Response
