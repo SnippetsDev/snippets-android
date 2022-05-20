@@ -1,9 +1,12 @@
 package dev.snippets.data.models
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 
+@Entity(tableName = "table_snippets")
 data class Snippet(
-    val id: String,
+    @PrimaryKey val id: String,
     val title: String,
     val language: String,
     val description: String,

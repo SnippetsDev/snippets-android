@@ -5,26 +5,71 @@ import androidx.lifecycle.liveData
 import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import dev.snippets.data.local.SnippetsDao
 import dev.snippets.data.models.Snippet
+import dev.snippets.data.models.Tag
+import dev.snippets.data.network.Api
+import dev.snippets.data.network.AuthRequestBody
+import dev.snippets.data.network.SetPreferredTagsRequestBody
 import dev.snippets.util.State
 import dev.snippets.util.getUniqueNameForImage
 import dev.snippets.util.log
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import retrofit2.Response
 
 class Repository(
-    private val api: Api
+    private val api: Api,
+    private val dao: SnippetsDao
 ) {
-    suspend fun getSnippetsWithPreferredTags(tags: String) =
-        dataOrError { api.getSnippetsForTags(tags) }
+    fun getSnippetsWithPreferredTags(tags: List<String>, forceRefresh: Boolean = false) = flow {
+        val dbResult = dao.getSnippetsForTags(tags)
+        var cacheReturned = false
+        if (dbResult.isNotEmpty()) {
+            cacheReturned = true
+            emit(State.Success(dbResult))
+        }
+        val networkResult = dataOrError { api.getSnippetsForTags(tags.joinToString(",")) }
+        if (networkResult is State.Success) {
+            dao.insertSnippets(networkResult.data)
+            if (!cacheReturned || forceRefresh) emit(State.Success(networkResult.data))
+        }
+        if (networkResult is State.Error && !cacheReturned) emit(State.Error("Couldn't fetch snippets right now"))
+    }.flowOn(Dispatchers.IO)
 
-    suspend fun getAllTags() = dataOrError { api.getAllTags() }
+    fun getAllTags() = flow {
+        val dbResult = dao.getAllTags()
+        var cacheReturned = false
+        if (dbResult.isNotEmpty()) {
+            cacheReturned = true
+            emit(State.Success(dbResult.map { it.name }))
+        }
+        val networkResult = dataOrError { api.getAllTags() }
+        if (networkResult is State.Success) {
+            dao.insertTags(networkResult.data.map { Tag(it) })
+            if (!cacheReturned) emit(State.Success(networkResult.data))
+        }
+        if (networkResult is State.Error && !cacheReturned) emit(State.Error("Couldn't fetch tags right now"))
+    }.flowOn(Dispatchers.IO)
 
-    suspend fun getSnippet(id: String) = dataOrError { api.
-    getSnippet(id) }
+    fun getSnippet(id: String) = flow {
+        val dbResult = dao.getSnippetById(id)
+        if (dbResult != null) {
+            emit(State.Success(dbResult))
+        } else {
+            val networkResult = dataOrError { api.getSnippet(id) }
+            if (networkResult is State.Success) {
+                dao.insertSnippets(networkResult.data)
+                emit(State.Success(networkResult.data[0]))
+            } else {
+                emit(State.Error("Couldn't fetch snippet right now"))
+            }
+        }
+    }.flowOn(Dispatchers.IO)
 
     fun uploadImageToFirebase(imageUri: Uri) = liveData {
         emit(State.Loading)
@@ -57,9 +102,11 @@ class Repository(
         AuthRequestBody(accessCode)
     ) }
 
-    suspend fun setPreferredTags(userId: Long, tags: List<String>) = dataOrError { api.setPreferredTags(SetPreferredTagsRequestBody(userId, tags)) }
+    suspend fun setPreferredTags(userId: Long, tags: List<String>) = dataOrError { api.setPreferredTags(
+        SetPreferredTagsRequestBody(userId, tags)
+    ) }
 
-            /**
+    /**
      * This is a really common pattern where the API call result needs to be checked for errors.
      * This method simplifies the error handling and returns the data if successful, error message otherwise.
      * Note that this method returns the data or error wrapped in a State object. It does not emit a loading state.

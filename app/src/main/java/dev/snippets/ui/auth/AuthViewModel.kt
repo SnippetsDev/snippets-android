@@ -4,9 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.snippets.data.Repository
-import dev.snippets.data.SharedPrefHelper
+import dev.snippets.data.local.SharedPrefHelper
 import dev.snippets.util.State
 import dev.snippets.util.log
+import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 @HiltViewModel
@@ -18,12 +19,13 @@ class AuthViewModel @Inject constructor(
 
     fun getAllTags() = liveData {
         emit(State.Loading)
-        val response = repo.getAllTags()
-        if (response is State.Success) {
-            listTags = response.data.toMutableList()
-            emit(State.Success(response.data))
-        } else if (response is State.Error) {
-            emit(State.Error(response.message))
+        repo.getAllTags().collect { response ->
+            if (response is State.Success) {
+                listTags = response.data.toMutableList()
+                emit(State.Success(response.data))
+            } else if (response is State.Error) {
+                emit(State.Error(response.message))
+            }
         }
     }
 

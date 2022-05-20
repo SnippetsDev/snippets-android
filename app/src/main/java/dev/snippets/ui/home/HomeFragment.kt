@@ -35,7 +35,7 @@ class HomeFragment : Fragment() {
         binding.listSnippets.setLayoutManager(LinearLayoutManager(context))
 
         binding.layoutSwipeRefresh.setOnRefreshListener {
-            renderSnippets()
+            renderSnippets(forceRefresh = true)
         }
         renderSnippets()
     }
@@ -45,8 +45,8 @@ class HomeFragment : Fragment() {
      * is not observed, it'll not work at all. This was causing problems with the swipe to refresh
      * feature, so this fixes it.
      */
-    private fun renderSnippets() {
-        model.getSnippetsWithPreferredTags().observe(viewLifecycleOwner) {
+    private fun renderSnippets(forceRefresh: Boolean = false) {
+        model.getSnippetsWithPreferredTags(forceRefresh).observe(viewLifecycleOwner) {
             when (it) {
                 is State.Loading -> {
                     binding.lottie.hide()

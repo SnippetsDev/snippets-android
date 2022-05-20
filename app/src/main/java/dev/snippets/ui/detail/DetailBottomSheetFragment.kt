@@ -62,7 +62,7 @@ class DetailBottomSheetFragment : BottomSheetDialogFragment() {
                 }
                 is State.Success -> {
                     binding.progressBar.hide()
-                    setupSnippet(it.data[0])
+                    setupSnippet(it.data)
                 }
             }
         }

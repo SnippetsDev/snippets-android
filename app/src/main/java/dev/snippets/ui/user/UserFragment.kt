@@ -12,7 +12,7 @@ import coil.transform.CircleCropTransformation
 import com.google.android.flexbox.*
 import dagger.hilt.android.AndroidEntryPoint
 import dev.snippets.BuildConfig
-import dev.snippets.data.SharedPrefHelper
+import dev.snippets.data.local.SharedPrefHelper
 import dev.snippets.databinding.FragmentUserBinding
 import dev.snippets.databinding.ListItemTagBinding
 import javax.inject.Inject
