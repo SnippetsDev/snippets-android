@@ -1,10 +1,13 @@
 package dev.snippets.ui.home
 
 import android.content.Context
+import android.graphics.ColorFilter
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import coil.load
 import coil.transform.RoundedCornersTransformation
 import com.google.android.material.chip.Chip
@@ -22,6 +25,13 @@ class SnippetsListAdapter(private val context: Context, private val snippets: Li
                 textViewSnippetTitle.text = snippet.title
                 textViewSnippetDescription.text = snippet.description
                 imageViewSnippetOutput.load(snippet.imageUrl) {
+                    crossfade(true)
+                    placeholder(CircularProgressDrawable(context).apply {
+                        strokeWidth = 10f
+                        centerRadius = 30f
+                        setColorSchemeColors(ContextCompat.getColor(context, R.color.teal_200))
+                        start()
+                    })
                     transformations(RoundedCornersTransformation(20f))
                 }
                 for (tag in snippet.tags) {
