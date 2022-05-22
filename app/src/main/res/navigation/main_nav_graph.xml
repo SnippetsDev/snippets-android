@@ -32,5 +32,13 @@
         <argument
             android:name="snippetId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_detailBottomSheetFragment_to_expandedImageActivity"
+            app:destination="@id/expandedImageActivity" />
     </dialog>
+    <activity
+        android:id="@+id/expandedImageActivity"
+        android:name="dev.snippets.ui.detail.ExpandedImageActivity"
+        android:label="activity_expanded_image"
+        tools:layout="@layout/activity_expanded_image" />
 </navigation>

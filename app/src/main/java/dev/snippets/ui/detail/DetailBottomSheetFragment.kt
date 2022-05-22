@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.ViewCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -75,12 +75,11 @@ class DetailBottomSheetFragment : BottomSheetDialogFragment() {
             snippet.imageUrl?.let {
                 imageViewSnippetOutputImage.load(snippet.imageUrl) {
                     crossfade(true)
-                    placeholder(CircularProgressDrawable(requireContext()).apply {
-                        strokeWidth = 5f
-                        centerRadius = 30f
-                        start()
-                    })
+                    placeholder(context?.getCircularProgressDrawable())
                     transformations(RoundedCornersTransformation(16f))
+                }
+                imageViewSnippetOutputImage.setOnClickListener {
+                    findNavController().navigate(R.id.action_detailBottomSheetFragment_to_expandedImageActivity, bundleOf("imageUrl" to snippet.imageUrl))
                 }
             } ?: imageViewSnippetOutputImage.hide()
             inflateChips(

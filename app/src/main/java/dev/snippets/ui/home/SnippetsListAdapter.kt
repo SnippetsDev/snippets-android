@@ -14,6 +14,7 @@ import com.google.android.material.chip.Chip
 import dev.snippets.R
 import dev.snippets.data.models.Snippet
 import dev.snippets.databinding.LayoutSnippetBinding
+import dev.snippets.util.getCircularProgressDrawable
 
 class SnippetsListAdapter(private val context: Context, private val snippets: List<Snippet>) :
     RecyclerView.Adapter<SnippetsListAdapter.ViewHolder>() {
@@ -26,12 +27,7 @@ class SnippetsListAdapter(private val context: Context, private val snippets: Li
                 textViewSnippetDescription.text = snippet.description
                 imageViewSnippetOutput.load(snippet.imageUrl) {
                     crossfade(true)
-                    placeholder(CircularProgressDrawable(context).apply {
-                        strokeWidth = 10f
-                        centerRadius = 30f
-                        setColorSchemeColors(ContextCompat.getColor(context, R.color.teal_200))
-                        start()
-                    })
+                    placeholder(context.getCircularProgressDrawable())
                     transformations(RoundedCornersTransformation(20f))
                 }
                 for (tag in snippet.tags) {
