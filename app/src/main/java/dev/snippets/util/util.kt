@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.snackbar.Snackbar
@@ -16,6 +17,7 @@ import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dev.snippets.BuildConfig
+import dev.snippets.R
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -106,3 +108,10 @@ fun <T : Any?> getMoshiAdapter(type: Class<T> ): JsonAdapter<T>? {
         .build()
     return moshi.adapter(type)
 }
+
+fun Context.getCircularProgressDrawable() = CircularProgressDrawable(this).apply {
+        strokeWidth = 10f
+        centerRadius = 30f
+        setColorSchemeColors(ContextCompat.getColor(this@getCircularProgressDrawable, R.color.teal_200))
+        start()
+    }
