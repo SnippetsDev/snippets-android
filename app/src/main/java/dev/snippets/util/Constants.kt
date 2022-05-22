@@ -20,6 +20,7 @@ object Constants {
 
     const val KEY_CODE = "key_code"
     const val KEY_PUBLISHED_FIRST_SNIPPET = "key_published_first_snippet"
+    const val KEY_PUBLISHED_SNIPPET = "key_published_snippet"
 
     const val KEY_USER = "shared_pref_user"
 
