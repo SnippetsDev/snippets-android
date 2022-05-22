@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -122,6 +124,7 @@ class AddSnippetCodeFragment : Fragment() {
                             }
                             lifecycleScope.launch {
                                 delay(3000)
+                                setFragmentResult(Constants.KEY_PUBLISHED_SNIPPET, bundleOf(Constants.KEY_PUBLISHED_SNIPPET to true))
                                 findNavController().popBackStack()
                             }
                         }
