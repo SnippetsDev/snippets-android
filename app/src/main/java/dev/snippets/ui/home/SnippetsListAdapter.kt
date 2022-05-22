@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.ColorFilter
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +16,7 @@ import dev.snippets.R
 import dev.snippets.data.models.Snippet
 import dev.snippets.databinding.LayoutSnippetBinding
 import dev.snippets.util.getCircularProgressDrawable
+import dev.snippets.util.hide
 
 class SnippetsListAdapter(private val context: Context, private val snippets: List<Snippet>) :
     RecyclerView.Adapter<SnippetsListAdapter.ViewHolder>() {
@@ -25,7 +27,10 @@ class SnippetsListAdapter(private val context: Context, private val snippets: Li
             with(binding) {
                 textViewSnippetTitle.text = snippet.title
                 textViewSnippetDescription.text = snippet.description
-                imageViewSnippetOutput.load(snippet.imageUrl) {
+
+                if (snippet.imageUrl.isNullOrEmpty()) imageViewSnippetOutput.hide()
+                else imageViewSnippetOutput.load(snippet.imageUrl) {
+                    error(R.mipmap.ic_launcher)
                     crossfade(true)
                     placeholder(context.getCircularProgressDrawable())
                     transformations(RoundedCornersTransformation(20f))
