@@ -1,26 +1,23 @@
 package dev.snippets.ui.home
 
 import android.content.Context
-import android.graphics.ColorFilter
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import coil.load
 import coil.transform.RoundedCornersTransformation
 import com.google.android.material.chip.Chip
 import dev.snippets.R
 import dev.snippets.data.models.Snippet
 import dev.snippets.databinding.LayoutSnippetBinding
+import dev.snippets.ui.user.TagsListAdapter
 import dev.snippets.util.getCircularProgressDrawable
 import dev.snippets.util.hide
 
-class SnippetsListAdapter(private val context: Context, private val snippets: List<Snippet>) :
-    RecyclerView.Adapter<SnippetsListAdapter.ViewHolder>() {
-
+class SnippetsListAdapter(private val context: Context) : ListAdapter<Snippet, SnippetsListAdapter.ViewHolder>(SnippetsDiff()) {
     inner class ViewHolder(val binding: LayoutSnippetBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(snippet: Snippet) {
@@ -35,6 +32,7 @@ class SnippetsListAdapter(private val context: Context, private val snippets: Li
                     placeholder(context.getCircularProgressDrawable())
                     transformations(RoundedCornersTransformation(20f))
                 }
+                binding.chipGroupSnippetTags.removeAllViews()
                 for (tag in snippet.tags) {
                     val chip = LayoutInflater.from(context)
                         .inflate(R.layout.layout_chip_tag, chipGroupSnippetTags, false) as Chip
@@ -61,8 +59,18 @@ class SnippetsListAdapter(private val context: Context, private val snippets: Li
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(snippets[position])
+        holder.bind(getItem(position))
+    }
+}
+
+class SnippetsDiff : DiffUtil.ItemCallback<Snippet>(
+
+) {
+    override fun areItemsTheSame(oldItem: Snippet, newItem: Snippet): Boolean {
+        return oldItem.id == newItem.id
     }
 
-    override fun getItemCount() = snippets.size
+    override fun areContentsTheSame(oldItem: Snippet, newItem: Snippet): Boolean {
+        return oldItem == newItem
+    }
 }
