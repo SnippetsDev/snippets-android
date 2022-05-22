@@ -1,5 +1,7 @@
 # Snippets
-Snippets is an upcoming platform for sharing and discovering helpful code snippets!
+Snippets is a code sharing and dicovery platform aimed at improving developer prductivity.
+
+![Snippets](https://user-images.githubusercontent.com/22092047/169704093-1b6d8b90-bd6f-4d1f-adfd-c297c2f925d6.jpeg)
 
 ## Primary Features
 - Share and discover interesting code snippets that help you improve different areas of your apps
@@ -12,6 +14,7 @@ Snippets is an upcoming platform for sharing and discovering helpful code snippe
 - Kotlin 1.6.10
 - Kotlin Coroutines and Flow for concurrency and async
 - Clean MVVM Architecture with Repository pattern
+- Room ORM with SQLite for Database Caching
 - Retrofit and Moshi for network calls
 - Dependency Injection using Hilt
 - Firebase Storage for image upload
