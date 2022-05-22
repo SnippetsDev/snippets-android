@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
@@ -18,6 +19,7 @@ import dev.snippets.util.*
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val model by viewModels<HomeViewModel>()
+    private lateinit var adapter: SnippetsListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,9 +32,10 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         if (model.isNewUser()) requireContext().clearBackStackAndLaunchActivity(AuthActivity::class.java)
 
+        adapter = SnippetsListAdapter(requireContext())
+        binding.listSnippets.getRecyclerView().adapter = adapter
         binding.listSnippets.setLayoutManager(LinearLayoutManager(context))
 
         binding.layoutSwipeRefresh.setOnRefreshListener {
@@ -44,9 +47,7 @@ class HomeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         setFragmentResultListener(Constants.KEY_PUBLISHED_SNIPPET) { requestKey, bundle ->
-            if (bundle[Constants.KEY_PUBLISHED_SNIPPET] != null) {
-                renderSnippets(forceRefresh = true)
-            }
+            renderSnippets(forceRefresh = true)
         }
     }
 
@@ -82,9 +83,7 @@ class HomeFragment : Fragment() {
                     } else {
                         binding.lottie.hide()
                         binding.listSnippets.unVeil()
-                        binding.listSnippets.getRecyclerView().apply {
-                            adapter = SnippetsListAdapter(requireContext(), it.data)
-                        }
+                        adapter.submitList(it.data)
                         binding.listSnippets.showWithAnimation()
                     }
                 }

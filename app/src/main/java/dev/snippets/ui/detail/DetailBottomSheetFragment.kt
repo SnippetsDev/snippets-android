@@ -74,6 +74,7 @@ class DetailBottomSheetFragment : BottomSheetDialogFragment() {
             textViewSnippetDescription.text = snippet.description
             snippet.imageUrl?.let {
                 imageViewSnippetOutputImage.load(snippet.imageUrl) {
+                    error(R.mipmap.ic_launcher)
                     crossfade(true)
                     placeholder(context?.getCircularProgressDrawable())
                     transformations(RoundedCornersTransformation(16f))

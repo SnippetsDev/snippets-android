@@ -36,7 +36,7 @@ class Repository(
         val networkResult = dataOrError { api.getSnippetsForTags(tags.joinToString(",")) }
         if (networkResult is State.Success) {
             dao.insertSnippets(networkResult.data)
-            if (!cacheReturned || forceRefresh) emit(State.Success(networkResult.data))
+            if (!cacheReturned || forceRefresh) emit(State.Success(dao.getSnippetsForTags(tags)))
         }
         if (networkResult is State.Error && !cacheReturned) emit(State.Error("Couldn't fetch snippets right now"))
     }.flowOn(Dispatchers.IO)
