@@ -15,8 +15,8 @@ android {
         applicationId "dev.snippets"
         minSdk 21
         targetSdk 31
-        versionCode 10
-        versionName "0.2.3"
+        versionCode 11
+        versionName "0.2.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
