@@ -48,7 +48,7 @@ class CreateViewModel @Inject constructor(
         language = ""
     }
 
-    fun canMoveToAddImage() = title.isNotEmpty() && tags.isNotEmpty() && language.isNotEmpty()
+    fun canMoveToAddImage() = title.isNotEmpty() && tags.isNotEmpty() && language.isNotEmpty() && description.isNotEmpty()
 
     fun publishSnippet() = repo.publishSnippet(
         Snippet(
